@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shubham Rohal — PhD Researcher, UC Merced</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg2: #f9f9f9;
+    --border: #e8e8e8;
+    --text: #111111;
+    --text2: #555555;
+    --text3: #999999;
+    --accent: #111111;
+    --radius: 10px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111111;
+      --bg2: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --text2: #aaaaaa;
+      --text3: #666666;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.5; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  .nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 2rem; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--bg); z-index: 100;
+  }
+  .nav-name { font-size: 15px; font-weight: 600; }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { font-size: 13px; color: var(--text2); transition: color .15s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero { padding: 4.5rem 2rem 3.5rem; border-bottom: 1px solid var(--border); }
+  .hero-label { font-size: 11px; letter-spacing: .12em; color: var(--text3); text-transform: uppercase; margin-bottom: 1rem; }
+  .hero-name { font-size: 48px; font-weight: 600; line-height: 1.05; margin-bottom: .75rem; letter-spacing: -.03em; }
+  .hero-role { font-size: 15px; color: var(--text2); line-height: 1.75; max-width: 540px; margin-bottom: 2rem; }
+  .hero-links { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12px;
+    padding: 6px 14px; border: 1px solid var(--border); border-radius: 100px;
+    color: var(--text2); transition: border-color .15s, color .15s; cursor: pointer; background: transparent;
+  }
+  .pill:hover { border-color: var(--text); color: var(--text); }
+  .pill i { font-size: 14px; }
+
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: repeat(4,1fr); background: var(--border); gap: 1px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stat { background: var(--bg); padding: 1.25rem 1.5rem; }
+  .stat-val { font-size: 24px; font-weight: 600; margin-bottom: 2px; }
+  .stat-lbl { font-size: 12px; color: var(--text3); }
+
+  /* SECTIONS */
+  .section { padding: 2.75rem 2rem; border-bottom: 1px solid var(--border); }
+  .section-eyebrow { font-size: 11px; letter-spacing: .1em; color: var(--text3); text-transform: uppercase; margin-bottom: 1.5rem; }
+  .two-col { display: grid; grid-template-columns: 190px 1fr; gap: 2rem; }
+  .col-label { font-size: 13px; color: var(--text3); padding-top: 2px; line-height: 1.6; }
+
+  /* INTERESTS */
+  .interests { display: flex; flex-wrap: wrap; gap: 8px; }
+  .interest-tag { font-size: 12px; padding: 5px 13px; border: 1px solid var(--border); border-radius: 8px; color: var(--text2); }
+
+  /* PROJECT CARDS */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .proj-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color .2s; }
+  .proj-card:hover { border-color: var(--text3); }
+  .proj-header { padding: 1.25rem; cursor: pointer; }
+  .proj-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+  .proj-title { font-size: 14px; font-weight: 600; line-height: 1.4; flex: 1; }
+  .proj-toggle { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid var(--border); border-radius: 50%; flex-shrink: 0; }
+  .proj-toggle i { font-size: 14px; color: var(--text2); transition: transform .3s; }
+  .proj-card.open .proj-toggle i { transform: rotate(45deg); }
+  .proj-meta { font-size: 11px; color: var(--text3); margin-bottom: 5px; }
+  .proj-desc { font-size: 12px; color: var(--text2); line-height: 1.6; }
+  .proj-hint { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text3); margin-top: 8px; }
+
+  /* PANEL */
+  .proj-panel { display: none; border-top: 1px solid var(--border); }
+  .proj-card.open .proj-panel { display: block; }
+  .viewer-area { background: var(--bg2); height: 260px; position: relative; overflow: hidden; }
+  .viewer-canvas { width: 100%; height: 100%; display: none; }
+  .viewer-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+  .viewer-placeholder i { font-size: 36px; color: var(--text3); }
+  .viewer-placeholder-text { font-size: 12px; color: var(--text3); text-align: center; line-height: 1.6; }
+  .upload-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 100px; cursor: pointer; background: var(--bg); color: var(--text2); transition: border-color .15s, color .15s; }
+  .upload-btn:hover { border-color: var(--text); color: var(--text); }
+  .upload-input { display: none; }
+  .viewer-controls { position: absolute; bottom: 10px; right: 10px; display: none; gap: 6px; z-index: 5; }
+  .viewer-controls button { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 50%; background: var(--bg); cursor: pointer; transition: border-color .15s; }
+  .viewer-controls button:hover { border-color: var(--text); }
+  .viewer-controls button i { font-size: 13px; color: var(--text2); }
+  .proj-detail { padding: 1.25rem; }
+  .proj-detail-title { font-size: 11px; font-weight: 600; margin-bottom: .6rem; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; }
+  .proj-detail p { font-size: 13px; color: var(--text2); line-height: 1.75; margin-bottom: .75rem; }
+  .proj-detail ul { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: .75rem; }
+  .proj-detail ul li { font-size: 12px; color: var(--text2); padding-left: 1rem; position: relative; line-height: 1.6; }
+  .proj-detail ul li::before { content: "—"; position: absolute; left: 0; color: var(--text3); }
+  .proj-pub { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 10px; border: 1px solid var(--border); border-radius: 5px; color: var(--text2); }
+  .badge-award { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 2px 8px; border-radius: 4px; background: #fff8e6; color: #92620a; margin-left: 6px; }
+  .badge-rate { display: inline-flex; align-items: center; font-size: 11px; padding: 2px 8px; border-radius: 4px; background: #e8f0fe; color: #1a56db; margin-left: 6px; }
+
+  /* IMAGES SECTION */
+  .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .img-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: border-color .2s; }
+  .img-card:hover { border-color: var(--text3); }
+  .img-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; background: var(--bg2); }
+  .img-placeholder { width: 100%; aspect-ratio: 4/3; background: var(--bg2); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; }
+  .img-placeholder i { font-size: 28px; color: var(--text3); }
+  .img-placeholder span { font-size: 11px; color: var(--text3); }
+  .img-caption { padding: .6rem .75rem; font-size: 12px; color: var(--text2); }
+  .add-image-btn { display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px dashed var(--border); border-radius: var(--radius); aspect-ratio: 4/3; cursor: pointer; color: var(--text3); font-size: 12px; transition: border-color .15s, color .15s; }
+  .add-image-btn:hover { border-color: var(--text); color: var(--text); }
+  .add-image-btn i { font-size: 20px; }
+  #imageUploadInput { display: none; }
+
+  /* LIGHTBOX */
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 1000; align-items: center; justify-content: center; }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+  .lightbox-close { position: absolute; top: 20px; right: 24px; font-size: 28px; color: #fff; cursor: pointer; background: none; border: none; }
+
+  /* PUBS / EXP */
+  .item { padding: .875rem 0; border-top: 1px solid var(--border); }
+  .item:first-of-type { border-top: none; padding-top: 0; }
+  .item-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; line-height: 1.4; }
+  .item-meta { font-size: 12px; color: var(--text2); margin-bottom: 4px; }
+  .item-desc { font-size: 13px; color: var(--text2); line-height: 1.65; }
+  .exp-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+  .exp-co { font-size: 14px; font-weight: 600; }
+  .exp-date { font-size: 12px; color: var(--text3); }
+
+  /* AWARDS */
+  .awards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px,1fr)); gap: 8px; }
+  .award-card { padding: .75rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); }
+  .award-icon { font-size: 16px; color: #d4a017; margin-bottom: 6px; }
+  .award-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; line-height: 1.3; }
+  .award-year { font-size: 11px; color: var(--text3); }
+
+  /* FOOTER */
+  .footer { padding: 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-left { font-size: 12px; color: var(--text3); }
+  .footer-right { display: flex; gap: 1.25rem; }
+  .footer-right a { font-size: 12px; color: var(--text3); transition: color .15s; }
+  .footer-right a:hover { color: var(--text); }
+
+  @media (max-width: 640px) {
+    .projects-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .col-label { display: none; }
+    .stats-row { grid-template-columns: repeat(2,1fr); }
+    .hero-name { font-size: 34px; }
+    .nav-links { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-name">Shubham Rohal</span>
+  <div class="nav-links">
+    <a href="#research">Research</a>
+    <a href="#images">Gallery</a>
+    <a href="#pubs">Publications</a>
+    <a href="#teaching">Teaching</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">PhD Researcher · EECS · UC Merced</div>
+  <div class="hero-name">Shubham<br>Rohal</div>
+  <div class="hero-role">Building sensing systems that make everyday surfaces and objects intelligent — through origami-inspired structures, wearable sensing, and multi-modal IoT.</div>
+  <div class="hero-links">
+    <a class="pill" href="mailto:srohal@ucmerced.edu"><i class="ti ti-mail"></i>srohal@ucmerced.edu</a>
+    <a class="pill" href="https://scholar.google.com/citations?user=8EqXZR8AAAAJ&hl=en" target="_blank"><i class="ti ti-book"></i>Google Scholar</a>
+    <a class="pill" href="https://sites.google.com/view/srohal" target="_blank"><i class="ti ti-world"></i>Personal Site</a>
+    <a class="pill" href="https://github.com/sr004" target="_blank"><i class="ti ti-brand-github"></i>GitHub</a>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat"><div class="stat-val">10+</div><div class="stat-lbl">Publications</div></div>
+  <div class="stat"><div class="stat-val">2</div><div class="stat-lbl">Patents</div></div>
+  <div class="stat"><div class="stat-val">7+</div><div class="stat-lbl">Awards & honors</div></div>
+  <div class="stat"><div class="stat-val">10+</div><div class="stat-lbl">Students mentored</div></div>
+</div>
+
+<!-- INTERESTS -->
+<div class="section">
+  <div class="section-eyebrow">Research interests</div>
+  <div class="interests">
+    <span class="interest-tag">Ubiquitous Computing</span>
+    <span class="interest-tag">Wearable Systems</span>
+    <span class="interest-tag">Internet of Things</span>
+    <span class="interest-tag">Human-Computer Interaction</span>
+    <span class="interest-tag">Origami-Inspired Sensing</span>
+    <span class="interest-tag">Multi-Modal Sensing</span>
+    <span class="interest-tag">Physical Augmentation</span>
+  </div>
+</div>
+
+<!-- RESEARCH + 3D VIEWER -->
+<div class="section" id="research">
+  <div class="section-eyebrow">Active research projects — click any card to explore + load a 3D model</div>
+  <div class="projects-grid" id="projectsGrid"></div>
+</div>
+
+<!-- IMAGES / GALLERY -->
+<div class="section" id="images">
+  <div class="section-eyebrow">Research gallery — prototypes, lab setups & paper figures</div>
+  <div class="images-grid" id="imagesGrid">
+    <label class="add-image-btn" for="imageUploadInput">
+      <i class="ti ti-photo-plus"></i>Add photo
+    </label>
+    <input type="file" id="imageUploadInput" accept="image/*" multiple onchange="addImages(event)">
+  </div>
+</div>
+
+<!-- PUBLICATIONS -->
+<div class="section" id="pubs">
+  <div class="section-eyebrow">Selected publications</div>
+  <div class="two-col">
+    <div class="col-label">Peer-reviewed venues</div>
+    <div>
+      <div class="item">
+        <div class="item-title">Don't Crosstalk to Me: Origami Structure-Augmented Sensing for Scalable Surface Pressure Monitoring <span class="badge-rate">18% accept</span></div>
+        <div class="item-meta">SenSys 2024</div>
+        <div class="item-desc">Shubham Rohal, Dong Yoon Lee, Carlos Ruiz, Joshua Zhang, Jonathon Fagert, Jun Han, Shijia Pan.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">AutoLoc: Autonomous Sensor Location Configuration via Cross-Modal Sensing</div>
+        <div class="item-meta">Frontiers in Big Data, 2022</div>
+        <div class="item-desc">Shubham Rohal, Yue Zhang, Carlos Ruiz, Shijia Pan.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">Demo Abstract: MOOCA — Miura-Ori Origami-Based Configurable Shelf-Liner <span class="badge-award"><i class="ti ti-trophy"></i>Best Demo</span></div>
+        <div class="item-meta">SenSys 2022</div>
+        <div class="item-desc">Shubham Rohal, Carlos Ruiz, Yue Zhang, Shijia Pan.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">Poster: Sedentary Posture Muscle Monitoring via Active Vibratory Sensing <span class="badge-award"><i class="ti ti-trophy"></i>Best Poster</span></div>
+        <div class="item-meta">IPSN 2022 · CPS-IoT Week</div>
+        <div class="item-desc">Shubham Rohal, Shreya Shriram, Zhizhang Hu, Yue Zhang, Phuc Nguyen, Shijia Pan.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">FinePose: Fine-Grained Postural Muscle Profiling via Haptic Vibration Signals</div>
+        <div class="item-meta">BodySys 2022 · MobiSys</div>
+        <div class="item-desc">Shubham Rohal, Shreya Shriram, Phuc Nguyen, Shijia Pan.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">Structural Intelligence Enabled Battery-Less Mobile Sensing for Air Quality Monitoring</div>
+        <div class="item-meta">EnsSys 2025 · CPS-IoT Week</div>
+        <div class="item-desc">Shubham Rohal, Joshua Zhang, Shijia Pan.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">OriFeel: Origami-Inspired Actuation for Force-Based Tactile Feedback on Ambient Surfaces</div>
+        <div class="item-meta">CS-ArXiv 2025</div>
+        <div class="item-desc">Shubham Rohal, Shijia Pan.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">Can On-Body Sensing Be Spatial Adaptive?</div>
+        <div class="item-meta">CS-ArXiv 2025</div>
+        <div class="item-desc">Shubham Rohal, Dong Yoon Lee, Phuc Nguyen, Shijia Pan.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">Mitigating Sensor Data Bias from User Operational Variability via Causal Intervention</div>
+        <div class="item-meta">HumanSys 2025 · CPS-IoT Week</div>
+        <div class="item-desc">Zhizhang Hu, Shubham Rohal, Shijia Pan.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">CPA: Cyber-Physical Augmentation for Vibration Sensing in Autonomous Retails</div>
+        <div class="item-meta">HotMobile 2023</div>
+        <div class="item-desc">Yue Zhang, Carlos Ruiz, Shubham Rohal, Shijia Pan.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PATENTS -->
+<div class="section">
+  <div class="section-eyebrow">Patents</div>
+  <div class="two-col">
+    <div class="col-label">Filed</div>
+    <div>
+      <div class="item">
+        <div class="item-title">Programmable Smart-Sensing Shelf Liner Apparatus for Autonomous Retail</div>
+        <div class="item-meta">US Patent App. 18/487,059</div>
+        <div class="item-desc">Shijia Pan, Shubham Rohal, Yue Zhang, Carlos Ruiz.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">Self-Adaptive Airflow Regulation Structure Enabled Batteryless PM2.5 Sensing</div>
+        <div class="item-meta">Provisional · UC-2025-976-1-PRV</div>
+        <div class="item-desc">Shijia Pan, Joshua Zhang, Shubham Rohal.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AWARDS -->
+<div class="section">
+  <div class="section-eyebrow">Awards & honors</div>
+  <div class="awards-grid">
+    <div class="award-card"><div class="award-icon"><i class="ti ti-trophy"></i></div><div class="award-name">SenSys Best Demo Award</div><div class="award-year">2022</div></div>
+    <div class="award-card"><div class="award-icon"><i class="ti ti-trophy"></i></div><div class="award-name">IPSN Best Poster Award</div><div class="award-year">2022</div></div>
+    <div class="award-card"><div class="award-icon"><i class="ti ti-award"></i></div><div class="award-name">UC Merced Grad Slam Finalist</div><div class="award-year">2025</div></div>
+    <div class="award-card"><div class="award-icon"><i class="ti ti-award"></i></div><div class="award-name">CITRIS Health Innovation Scholarship</div><div class="award-year">2024</div></div>
+    <div class="award-card"><div class="award-icon"><i class="ti ti-award"></i></div><div class="award-name">CITRIS Smart Health Masterclass</div><div class="award-year">2025</div></div>
+    <div class="award-card"><div class="award-icon"><i class="ti ti-school"></i></div><div class="award-name">UC Merced EECS Bobcat Fellowship</div><div class="award-year">2021, 2022</div></div>
+    <div class="award-card"><div class="award-icon"><i class="ti ti-plane"></i></div><div class="award-name">HotMobile Travel Award</div><div class="award-year">2023</div></div>
+    <div class="award-card"><div class="award-icon"><i class="ti ti-plane"></i></div><div class="award-name">BuildSys Travel Award</div><div class="award-year">2024</div></div>
+  </div>
+</div>
+
+<!-- TEACHING -->
+<div class="section" id="teaching">
+  <div class="section-eyebrow">Teaching</div>
+  <div class="two-col">
+    <div class="col-label">UC Merced<br>Teaching Assistant<br>Jan 2020 – Present</div>
+    <div>
+      <div class="item"><div class="exp-row"><span class="exp-co">Discrete Mathematics (CSE 15)</span><span class="exp-date">Fall 2025</span></div><div class="item-desc" style="font-size:12px">Lab sessions covering integers, graphs, and logical structures.</div></div>
+      <div class="item"><div class="exp-row"><span class="exp-co">Intro to Computing (CSE 19)</span><span class="exp-date">Fall 2023</span></div><div class="item-desc" style="font-size:12px">Python and OOP intro for non-CS majors.</div></div>
+      <div class="item"><div class="exp-row"><span class="exp-co">Computer Networks (CSE 160)</span><span class="exp-date">Fall 2023</span></div><div class="item-desc" style="font-size:12px">NesC / TinyOS projects; message-passing protocols.</div></div>
+      <div class="item"><div class="exp-row"><span class="exp-co">Algorithm Design & Analysis (CSE 100)</span><span class="exp-date">Fall/Spring 2020–21</span></div></div>
+      <div class="item"><div class="exp-row"><span class="exp-co">Data Structures (CSE 30)</span><span class="exp-date">Fall 21, Spring 24</span></div></div>
+      <div class="item"><div class="exp-row"><span class="exp-co">Advanced Programming / OpenGL (CSE 24)</span><span class="exp-date">Spring 2023</span></div></div>
+      <div class="item"><div class="exp-row"><span class="exp-co">OOP in C++ (CSE 165)</span><span class="exp-date">Spring 2020</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- INDUSTRY -->
+<div class="section">
+  <div class="section-eyebrow">Industry experience</div>
+  <div class="two-col">
+    <div class="col-label">Work</div>
+    <div>
+      <div class="item">
+        <div class="exp-row"><span class="exp-co">Computer Vision Intern · AiFi Inc., Santa Clara</span><span class="exp-date">May – Aug 2021</span></div>
+        <div class="item-desc">Multi-modal sensor fusion (camera + geophone) for autonomous retail pickup/put-down detection. Advised by Dr. Carlos Ruiz.</div>
+      </div>
+      <div class="item">
+        <div class="exp-row"><span class="exp-co">Full Stack Intern · Goglamrs, Chandigarh</span><span class="exp-date">Sep 2017 – Nov 2018</span></div>
+      </div>
+      <div class="item">
+        <div class="exp-row"><span class="exp-co">Java Development Trainee · AlphaIt World, Chandigarh</span><span class="exp-date">Jun – Aug 2015</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="section" id="contact">
+  <div class="section-eyebrow">Contact</div>
+  <div class="two-col">
+    <div class="col-label">Advisor: Shijia Pan<br>EECS · UC Merced</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <a class="pill" href="mailto:srohal@ucmerced.edu" style="width:fit-content"><i class="ti ti-mail"></i>srohal@ucmerced.edu</a>
+      <a class="pill" href="https://scholar.google.com/citations?user=8EqXZR8AAAAJ&hl=en" target="_blank" style="width:fit-content"><i class="ti ti-book"></i>Google Scholar</a>
+      <a class="pill" href="https://sites.google.com/view/srohal" target="_blank" style="width:fit-content"><i class="ti ti-world"></i>sites.google.com/view/srohal</a>
+      <a class="pill" href="https://github.com/sr004" target="_blank" style="width:fit-content"><i class="ti ti-brand-github"></i>github.com/sr004</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="footer-left">Shubham Rohal · PhD Researcher · UC Merced · 2025</span>
+  <div class="footer-right">
+    <a href="https://scholar.google.com/citations?user=8EqXZR8AAAAJ&hl=en" target="_blank">Scholar</a>
+    <a href="https://github.com/sr004" target="_blank">GitHub</a>
+    <a href="https://sites.google.com/view/srohal" target="_blank">Website</a>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()"><i class="ti ti-x"></i></button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ─── Project data ───────────────────────────────────────────────
+const projects = [
+  {
+    id: "origami-pressure",
+    title: "Origami Structure-Augmented Surface Pressure Sensing",
+    meta: "2022 – Present · SenSys 2024 · 18% acceptance rate",
+    desc: "Miura-Ori origami folds integrated into pressure sensor composites eliminate crosstalk between sensing cells.",
+    icon: "ti-grid-dots",
+    detail: `<p>Surface pressure sensing matrices power many ubiquitous applications — gait monitoring, posture analysis, autonomous retail. Traditional matrices either cost too much or suffer from signal leakage between cells (crosstalk), making readings unreliable.</p>
+    <p><strong>Key innovations:</strong></p>
+    <ul>
+      <li>Elastic 3D space truss structure inspired by Miura-Ori origami fold integrated into the composite layer — physically blocks spurious signal paths</li>
+      <li>Circuit-guided 1D CNN whose convolution kernel is designed from circuit properties, modeling and filtering ghosting signals algorithmically</li>
+      <li>Scalable to large-area deployments without cost blowup</li>
+    </ul>
+    <span class="proj-pub"><i class="ti ti-file-text"></i> SenSys 2024 — 18% acceptance rate</span>`
+  },
+  {
+    id: "orifeel",
+    title: "OriFeel: Origami-Inspired Tactile Feedback Interface",
+    meta: "2025 – Present · CS-ArXiv 2025",
+    desc: "Sub-centimeter tactile feedback embedded in everyday surfaces using origami folds controlled by a single string actuator.",
+    icon: "ti-fold",
+    detail: `<p>Today's tactile feedback systems are bulky or power-hungry, making them impractical for everyday objects. OriFeel embeds a Miura-Ori inspired 3D-printed elastic structure into flat surfaces — thin enough to hide in a table, shelf, or wall panel.</p>
+    <ul>
+      <li>Structure folds and changes height on demand, registering through touch at sub-centimeter thickness</li>
+      <li>Single string actuator controls multiple fold points, dramatically cutting power requirements</li>
+      <li>Enables ambient surfaces to communicate information through texture and pressure</li>
+    </ul>
+    <span class="proj-pub"><i class="ti ti-file-text"></i> CS-ArXiv 2025</span>`
+  },
+  {
+    id: "wearable-spatial",
+    title: "Spatially Adaptive Wearable Sensing",
+    meta: "2024 – Present · CS-ArXiv 2025",
+    desc: "On-surface gear structures let wearable sensors automatically reposition themselves to compensate for body shape variance.",
+    icon: "ti-settings-2",
+    detail: `<p>Wearable systems are highly sensitive to where sensors are placed — and people's bodies differ enormously. Existing systems don't adapt. This project integrates mechanical gear patterns directly into wearable surfaces so sensors can move autonomously.</p>
+    <ul>
+      <li>2D gear patterns printed onto wearable surfaces; rotation drives sensor movement across a defined track</li>
+      <li>Gear rotation constraints require a modified multi-agent path-finding algorithm</li>
+      <li>No manual recalibration needed when switching between users</li>
+    </ul>
+    <span class="proj-pub"><i class="ti ti-file-text"></i> CS-ArXiv 2025</span>`
+  },
+  {
+    id: "finepose",
+    title: "Fine-Grained Muscle Profiling for Posture Correction",
+    meta: "2021 – Present · IPSN 2022 Best Poster · BodySys 2022",
+    desc: "Repurposes haptic vibration actuators for active muscle sensing to profile stiffness and guide posture correction.",
+    icon: "ti-activity",
+    detail: `<p>Chronic pain from poor sitting posture costs billions annually. Existing solutions track skeletal position — but miss the muscles that actually cause long-term injury. This project senses muscle state directly using vibration signals already present in haptic feedback systems.</p>
+    <ul>
+      <li>Active vibration sensing: programmable signals travel through muscle; propagation models reveal stiffness</li>
+      <li>Captures Type I supporting muscles that EMG cannot characterize effectively</li>
+      <li>Regression models track stiffness change over time for personalized posture recommendations</li>
+    </ul>
+    <span class="proj-pub"><i class="ti ti-file-text"></i> IPSN 2022 Best Poster · BodySys @ MobiSys 2022</span>`
+  }
+];
+
+// ─── Build project cards ─────────────────────────────────────────
+const grid = document.getElementById('projectsGrid');
+projects.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'proj-card';
+  card.id = 'card-' + p.id;
+  card.innerHTML = `
+    <div class="proj-header" onclick="toggleCard('${p.id}')">
+      <div class="proj-top">
+        <div class="proj-title"><i class="ti ${p.icon}" style="font-size:14px;margin-right:6px;color:#999"></i>${p.title}</div>
+        <div class="proj-toggle"><i class="ti ti-plus"></i></div>
+      </div>
+      <div class="proj-meta">${p.meta}</div>
+      <div class="proj-desc">${p.desc}</div>
+      <div class="proj-hint"><i class="ti ti-cube" style="font-size:13px"></i>Expand to interact with 3D model</div>
+    </div>
+    <div class="proj-panel">
+      <div class="viewer-area" id="viewer-${p.id}">
+        <div class="viewer-placeholder" id="placeholder-${p.id}">
+          <i class="ti ti-cube-send"></i>
+          <div class="viewer-placeholder-text">Upload an STL file to view this project in 3D<br><small style="opacity:.7">Drag · Scroll to zoom · Pinch on mobile</small></div>
+          <label class="upload-btn" for="upload-${p.id}"><i class="ti ti-upload"></i>Upload STL</label>
+          <input class="upload-input" type="file" accept=".stl" id="upload-${p.id}" onchange="loadSTL(event,'${p.id}')">
+        </div>
+        <div class="viewer-controls" id="controls-${p.id}">
+          <button onclick="resetCamera('${p.id}')" title="Reset view"><i class="ti ti-focus-centered"></i></button>
+          <button onclick="toggleSpin('${p.id}')" id="spin-btn-${p.id}" title="Toggle rotation"><i class="ti ti-player-pause"></i></button>
+          <button onclick="toggleWire('${p.id}')" title="Toggle wireframe"><i class="ti ti-topology-star-3"></i></button>
+        </div>
+        <canvas id="canvas-${p.id}" class="viewer-canvas"></canvas>
+      </div>
+      <div class="proj-detail">
+        <div class="proj-detail-title">About this project</div>
+        ${p.detail}
+      </div>
+    </div>`;
+  grid.appendChild(card);
+});
+
+function toggleCard(id) {
+  const card = document.getElementById('card-' + id);
+  const wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.proj-card').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) {
+    card.classList.add('open');
+    if (viewers[id]) {
+      setTimeout(() => {
+        const c = document.getElementById('canvas-' + id);
+        viewers[id].renderer.setSize(c.offsetWidth, c.offsetHeight);
+      }, 50);
+    }
+  }
+}
+
+// ─── 3D STL Viewer ───────────────────────────────────────────────
+const viewers = {};
+
+function parseSTL(buf) {
+  const geo = new THREE.BufferGeometry();
+  const positions = [], normals = [];
+  const header = new Uint8Array(buf, 0, 80);
+  const txt = String.fromCharCode(...new Uint8Array(buf, 0, 5));
+  const isBinary = txt !== 'solid';
+
+  if (!isBinary) {
+    const text = new TextDecoder().decode(buf);
+    const re = /facet normal\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+outer loop\s+vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)/g;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      const nx=+m[1],ny=+m[2],nz=+m[3];
+      for(let i=0;i<3;i++) normals.push(nx,ny,nz);
+      positions.push(+m[4],+m[5],+m[6],+m[7],+m[8],+m[9],+m[10],+m[11],+m[12]);
+    }
+  } else {
+    const view = new DataView(buf);
+    const numTris = view.getUint32(80, true);
+    let off = 84;
+    for (let i = 0; i < numTris; i++) {
+      const nx=view.getFloat32(off,true),ny=view.getFloat32(off+4,true),nz=view.getFloat32(off+8,true);
+      off += 12;
+      for (let j = 0; j < 3; j++) {
+        positions.push(view.getFloat32(off,true),view.getFloat32(off+4,true),view.getFloat32(off+8,true));
+        normals.push(nx,ny,nz);
+        off += 12;
+      }
+      off += 2;
+    }
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
+  geo.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(normals), 3));
+  geo.computeBoundingBox();
+  return geo;
+}
+
+function loadSTL(evt, id) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => initViewer(id, e.target.result);
+  reader.readAsArrayBuffer(file);
+}
+
+function initViewer(id, buf) {
+  const container = document.getElementById('viewer-' + id);
+  const canvas = document.getElementById('canvas-' + id);
+  const placeholder = document.getElementById('placeholder-' + id);
+  const controls = document.getElementById('controls-' + id);
+  placeholder.style.display = 'none';
+  canvas.style.display = 'block';
+  controls.style.display = 'flex';
+
+  const W = container.clientWidth, H = container.clientHeight || 260;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setSize(W, H);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, W/H, 0.01, 100000);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  const dl = new THREE.DirectionalLight(0xffffff, 0.9); dl.position.set(1,2,3); scene.add(dl);
+  const dl2 = new THREE.DirectionalLight(0xffffff, 0.4); dl2.position.set(-2,-1,-1); scene.add(dl2);
+
+  const geo = parseSTL(buf);
+  geo.center();
+  const mat = new THREE.MeshPhongMaterial({ color: 0x888888, specular: 0x222222, shininess: 40, side: THREE.DoubleSide });
+  const wireMat = new THREE.MeshBasicMaterial({ color: 0x555555, wireframe: true });
+  const mesh = new THREE.Mesh(geo, mat);
+  scene.add(mesh);
+
+  const box = new THREE.Box3().setFromObject(mesh);
+  const size = box.getSize(new THREE.Vector3());
+  const maxDim = Math.max(size.x, size.y, size.z);
+  camera.position.set(0, 0, maxDim * 2.2);
+  camera.lookAt(0, 0, 0);
+
+  let spinning = true, useWire = false, rotX = 0, rotY = 0;
+  let isDragging = false, prevMouse = {x:0,y:0};
+
+  canvas.addEventListener('mousedown', e => { isDragging = true; prevMouse = {x:e.clientX,y:e.clientY}; spinning = false; });
+  window.addEventListener('mouseup', () => { isDragging = false; });
+  canvas.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    rotY += (e.clientX - prevMouse.x) * 0.008;
+    rotX += (e.clientY - prevMouse.y) * 0.008;
+    prevMouse = {x:e.clientX, y:e.clientY};
+  });
+  canvas.addEventListener('wheel', e => {
+    camera.position.z = Math.max(maxDim*0.4, Math.min(maxDim*7, camera.position.z + e.deltaY * 0.05));
+    e.preventDefault();
+  }, { passive: false });
+  let lastTouch = null;
+  canvas.addEventListener('touchstart', e => { lastTouch = e.touches[0]; spinning = false; });
+  canvas.addEventListener('touchmove', e => {
+    if (!lastTouch) return;
+    const t = e.touches[0];
+    rotY += (t.clientX - lastTouch.clientX) * 0.012;
+    rotX += (t.clientY - lastTouch.clientY) * 0.012;
+    lastTouch = t; e.preventDefault();
+  }, { passive: false });
+  canvas.addEventListener('touchend', () => { lastTouch = null; });
+
+  viewers[id] = {
+    renderer, scene, camera, mesh, mat, wireMat, maxDim,
+    get spinning(){ return spinning; }, set spinning(v){ spinning = v; },
+    get useWire(){ return useWire; }, set useWire(v){ useWire = v; },
+    get rotX(){ return rotX; }, set rotX(v){ rotX = v; },
+    get rotY(){ return rotY; }, set rotY(v){ rotY = v; },
+    reset() { rotX=0; rotY=0; camera.position.set(0,0,maxDim*2.2); spinning=true; }
+  };
+
+  (function animate() {
+    requestAnimationFrame(animate);
+    if (spinning) rotY += 0.008;
+    mesh.rotation.x = rotX;
+    mesh.rotation.y = rotY;
+    renderer.render(scene, camera);
+  })();
+}
+
+function resetCamera(id) { if (viewers[id]) viewers[id].reset(); }
+function toggleSpin(id) {
+  if (!viewers[id]) return;
+  viewers[id].spinning = !viewers[id].spinning;
+  document.getElementById('spin-btn-' + id).innerHTML = viewers[id].spinning
+    ? '<i class="ti ti-player-pause"></i>'
+    : '<i class="ti ti-player-play"></i>';
+}
+function toggleWire(id) {
+  if (!viewers[id]) return;
+  const v = viewers[id];
+  v.useWire = !v.useWire;
+  v.mesh.material = v.useWire ? v.wireMat : v.mat;
+}
+
+// ─── Image gallery ────────────────────────────────────────────────
+const imageStore = [];
+
+function addImages(evt) {
+  const files = Array.from(evt.target.files);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      imageStore.push({ src: e.target.result, name: file.name.replace(/\.[^.]+$/, '') });
+      renderGallery();
+    };
+    reader.readAsDataURL(file);
+  });
+  evt.target.value = '';
+}
+
+function renderGallery() {
+  const grid = document.getElementById('imagesGrid');
+  grid.innerHTML = '';
+  imageStore.forEach((img, i) => {
+    const card = document.createElement('div');
+    card.className = 'img-card';
+    card.innerHTML = `<img src="${img.src}" alt="${img.name}" loading="lazy" onclick="openLightbox('${img.src}')">
+      <div class="img-caption">${img.name}</div>`;
+    grid.appendChild(card);
+  });
+  const addBtn = document.createElement('label');
+  addBtn.className = 'add-image-btn';
+  addBtn.setAttribute('for', 'imageUploadInput');
+  addBtn.innerHTML = '<i class="ti ti-photo-plus"></i>Add photo';
+  grid.appendChild(addBtn);
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.id = 'imageUploadInput'; inp.accept = 'image/*'; inp.multiple = true;
+  inp.style.display = 'none';
+  inp.onchange = addImages;
+  grid.appendChild(inp);
+}
+
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>
