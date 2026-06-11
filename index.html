@@ -7,321 +7,438 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
   :root {
-    --bg: #0a0a12;
-    --bg2: #11111f;
-    --bg3: #16162a;
-    --border: rgba(255,255,255,0.08);
-    --border2: rgba(255,255,255,0.14);
-    --text: #f0f0f8;
-    --text2: #9999bb;
-    --text3: #55557a;
-    --accent1: #7c6fff;
-    --accent2: #3ecfcf;
-    --accent3: #ff6fb0;
-    --radius: 12px;
-    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --black: #111111;
+    --white: #FAFAF5;
+    --red:   #D62828;
+    --blue:  #1B4FD8;
+    --yellow:#F5C400;
+    --grid:  4px;
+    --font: 'Arial Black', Arial, sans-serif;
+    --font-body: Arial, Helvetica, sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: var(--font);
-    color: var(--text);
-    background: var(--bg);
-    line-height: 1.5;
-    min-height: 100vh;
+    font-family: var(--font-body);
+    color: var(--black);
+    background: var(--white);
     overflow-x: hidden;
   }
   a { color: inherit; text-decoration: none; }
 
-  /* GRADIENT BG */
-  .gradient-bg {
+  /* ── MONDRIAN GRID BACKGROUND ── */
+  body::before {
+    content: '';
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background:
-      radial-gradient(ellipse 80% 60% at 10% 0%, rgba(124,111,255,0.18) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 90% 10%, rgba(62,207,207,0.13) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 40% at 50% 100%, rgba(255,111,176,0.10) 0%, transparent 55%),
-      var(--bg);
+    background-image:
+      linear-gradient(var(--black) var(--grid), transparent var(--grid)),
+      linear-gradient(90deg, var(--black) var(--grid), transparent var(--grid));
+    background-size: 120px 120px;
+    opacity: 0.06;
   }
-  .content { position: relative; z-index: 1; }
+  .page { position: relative; z-index: 1; }
 
-  /* NAV */
+  /* ── NAV ── */
   .nav {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.1rem 2rem;
-    border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(10,10,18,0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    display: flex; align-items: stretch;
+    border-bottom: 4px solid var(--black);
+    position: sticky; top: 0; z-index: 200;
+    background: var(--white);
   }
-  .nav-name {
-    font-size: 15px; font-weight: 700; letter-spacing: -.01em;
-    background: linear-gradient(90deg, var(--accent1), var(--accent2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  .nav-logo {
+    display: flex; align-items: center;
+    padding: 0 1.5rem;
+    border-right: 4px solid var(--black);
+    background: var(--blue);
+    font-family: var(--font); font-size: 14px; font-weight: 900;
+    color: var(--white); letter-spacing: .02em;
+    white-space: nowrap;
   }
-  .nav-links { display: flex; gap: 1.5rem; }
-  .nav-links a { font-size: 13px; color: var(--text2); transition: color .15s; }
-  .nav-links a:hover { color: var(--text); }
+  .nav-links { display: flex; flex: 1; }
+  .nav-links a {
+    display: flex; align-items: center;
+    padding: 1rem 1.1rem;
+    border-right: 4px solid var(--black);
+    font-family: var(--font); font-size: 11px; font-weight: 900;
+    color: var(--black); text-transform: uppercase; letter-spacing: .06em;
+    transition: background .15s, color .15s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { background: var(--yellow); }
+  .nav-accent1 { background: var(--red); width: 48px; border-right: 4px solid var(--black); }
+  .nav-accent2 { background: var(--yellow); flex: 1; }
 
-  /* HERO */
+  /* ── HERO ── */
   .hero {
-    padding: 4rem 2rem 3.5rem;
-    border-bottom: 1px solid var(--border);
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 2rem;
-    align-items: center;
+    grid-template-columns: 1fr 280px;
+    border-bottom: 4px solid var(--black);
+    min-height: 320px;
   }
-  .hero-left {}
-  .hero-label { font-size: 11px; letter-spacing: .14em; color: var(--text3); text-transform: uppercase; margin-bottom: 1rem; }
+  .hero-main {
+    padding: 3rem 2.5rem;
+    border-right: 4px solid var(--black);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .hero-label {
+    font-family: var(--font-body); font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase; color: #666; margin-bottom: .75rem;
+  }
   .hero-name {
-    font-size: 52px; font-weight: 800; line-height: 1.02; margin-bottom: .75rem; letter-spacing: -.03em;
-    background: linear-gradient(135deg, #fff 0%, var(--accent1) 50%, var(--accent2) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-family: var(--font); font-size: 64px; font-weight: 900;
+    line-height: .95; letter-spacing: -.03em; color: var(--black);
+    margin-bottom: 1.25rem;
   }
-  .hero-role { font-size: 15px; color: var(--text2); line-height: 1.75; max-width: 520px; margin-bottom: 2rem; }
-  .hero-links { display: flex; gap: .75rem; flex-wrap: wrap; }
-
-  /* HEADSHOT */
-  .headshot-wrap {
-    width: 160px; height: 160px; flex-shrink: 0;
-    border-radius: 50%;
-    padding: 3px;
-    background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
-    box-shadow: 0 0 40px rgba(124,111,255,0.3);
+  .hero-role {
+    font-size: 14px; color: #444; line-height: 1.75; max-width: 480px;
+    margin-bottom: 2rem;
   }
-  .headshot-inner {
-    width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
-    background: var(--bg2);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .headshot-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .headshot-placeholder { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .headshot-placeholder i { font-size: 36px; color: var(--text3); }
-  .headshot-placeholder span { font-size: 10px; color: var(--text3); text-align: center; line-height: 1.4; }
-  .headshot-upload { display: none; }
-
-  /* PILL */
+  .hero-links { display: flex; gap: 0; flex-wrap: wrap; }
   .pill {
-    display: inline-flex; align-items: center; gap: 6px; font-size: 12px;
-    padding: 6px 14px; border: 1px solid var(--border2); border-radius: 100px;
-    color: var(--text2); transition: all .2s; cursor: pointer; background: rgba(255,255,255,0.03);
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font); font-size: 11px; font-weight: 900;
+    padding: 8px 14px; border: 3px solid var(--black);
+    color: var(--black); cursor: pointer; text-transform: uppercase;
+    letter-spacing: .05em; margin-right: -3px; margin-bottom: -3px;
+    transition: background .12s, color .12s; background: var(--white);
   }
-  .pill:hover { border-color: var(--accent1); color: var(--text); background: rgba(124,111,255,0.1); }
+  .pill:hover { background: var(--black); color: var(--white); }
   .pill i { font-size: 14px; }
 
-  /* STATS */
+  /* ── HERO RIGHT PANEL ── */
+  .hero-right {
+    display: grid;
+    grid-template-rows: 1fr 80px;
+  }
+  .headshot-block {
+    background: var(--yellow);
+    border-bottom: 4px solid var(--black);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .headshot-block img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .headshot-fallback {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding: 1rem; text-align: center;
+  }
+  .headshot-fallback i { font-size: 48px; color: var(--black); opacity: .3; }
+  .headshot-fallback span { font-size: 10px; color: var(--black); opacity: .5; line-height: 1.4; }
+  .hero-color-block { background: var(--red); }
+
+  /* ── STATS ── */
   .stats-row {
     display: grid; grid-template-columns: repeat(4,1fr);
-    background: var(--border); gap: 1px;
-    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    border-bottom: 4px solid var(--black);
   }
-  .stat { background: var(--bg); padding: 1.25rem 1.5rem; }
-  .stat-val {
-    font-size: 26px; font-weight: 700; margin-bottom: 2px;
-    background: linear-gradient(90deg, var(--accent1), var(--accent2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  .stat {
+    padding: 1.5rem 1.75rem;
+    border-right: 4px solid var(--black);
+    position: relative;
   }
-  .stat-lbl { font-size: 12px; color: var(--text3); }
+  .stat:last-child { border-right: none; }
+  .stat:nth-child(1) { background: var(--red); color: var(--white); }
+  .stat:nth-child(2) { background: var(--white); }
+  .stat:nth-child(3) { background: var(--blue); color: var(--white); }
+  .stat:nth-child(4) { background: var(--yellow); }
+  .stat-val { font-family: var(--font); font-size: 36px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+  .stat-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; opacity: .8; font-weight: 700; }
 
-  /* SECTIONS */
-  .section { padding: 2.75rem 2rem; border-bottom: 1px solid var(--border); }
+  /* ── SECTIONS ── */
+  .section { border-bottom: 4px solid var(--black); }
+  .section-inner { padding: 2.5rem 2.5rem; }
+  .section-header {
+    display: flex; align-items: stretch;
+    border-bottom: 4px solid var(--black);
+  }
+  .section-color-tab { width: 12px; flex-shrink: 0; }
   .section-eyebrow {
-    font-size: 11px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 1.5rem;
-    color: var(--accent2); font-weight: 600;
+    padding: .6rem 1.25rem;
+    font-family: var(--font); font-size: 11px; font-weight: 900;
+    text-transform: uppercase; letter-spacing: .1em; color: var(--black);
+    border-left: 4px solid var(--black);
   }
-  .two-col { display: grid; grid-template-columns: 190px 1fr; gap: 2rem; }
-  .col-label { font-size: 13px; color: var(--text3); padding-top: 2px; line-height: 1.6; }
+  .red-tab { background: var(--red); }
+  .blue-tab { background: var(--blue); }
+  .yellow-tab { background: var(--yellow); }
 
-  /* INTERESTS */
-  .interests { display: flex; flex-wrap: wrap; gap: 8px; }
+  /* ── INTERESTS ── */
+  .interests { display: flex; flex-wrap: wrap; gap: 0; padding: 2rem 2.5rem; }
   .interest-tag {
-    font-size: 12px; padding: 5px 13px;
-    border: 1px solid var(--border2); border-radius: 8px; color: var(--text2);
-    background: rgba(255,255,255,0.03);
-    transition: all .2s;
+    font-family: var(--font); font-size: 11px; font-weight: 900;
+    padding: 7px 14px; border: 3px solid var(--black);
+    text-transform: uppercase; letter-spacing: .05em;
+    margin-right: -3px; margin-bottom: -3px; cursor: default;
+    transition: background .12s;
   }
-  .interest-tag:hover { border-color: var(--accent1); color: var(--text); }
+  .interest-tag:nth-child(6n+1) { background: var(--yellow); }
+  .interest-tag:nth-child(6n+2) { background: var(--white); }
+  .interest-tag:nth-child(6n+3) { background: var(--blue); color: var(--white); }
+  .interest-tag:nth-child(6n+4) { background: var(--white); }
+  .interest-tag:nth-child(6n+5) { background: var(--red); color: var(--white); }
+  .interest-tag:nth-child(6n+6) { background: var(--white); }
 
-  /* PROJECT CARDS */
-  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  /* ── PROJECT CARDS ── */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; }
   .proj-card {
-    border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
-    transition: border-color .2s, box-shadow .2s;
-    background: rgba(255,255,255,0.02);
+    border-right: 4px solid var(--black);
+    border-bottom: 4px solid var(--black);
+    transition: background .15s;
   }
-  .proj-card:hover { border-color: var(--border2); box-shadow: 0 0 24px rgba(124,111,255,0.1); }
-  .proj-card.open { border-color: var(--accent1); box-shadow: 0 0 32px rgba(124,111,255,0.15); }
-  .proj-header { padding: 1.25rem; cursor: pointer; }
+  .proj-card:nth-child(2n) { border-right: none; }
+  .proj-header { padding: 1.5rem; cursor: pointer; }
+  .proj-accent-bar { height: 8px; margin-bottom: 1rem; }
+  .proj-card:nth-child(4n+1) .proj-accent-bar { background: var(--red); }
+  .proj-card:nth-child(4n+2) .proj-accent-bar { background: var(--blue); }
+  .proj-card:nth-child(4n+3) .proj-accent-bar { background: var(--yellow); }
+  .proj-card:nth-child(4n+4) .proj-accent-bar { background: var(--red); }
   .proj-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
-  .proj-title { font-size: 14px; font-weight: 600; line-height: 1.4; flex: 1; }
+  .proj-title { font-family: var(--font); font-size: 13px; font-weight: 900; line-height: 1.3; flex: 1; }
   .proj-toggle {
+    width: 28px; height: 28px; border: 3px solid var(--black); flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    width: 28px; height: 28px; border: 1px solid var(--border2); border-radius: 50%; flex-shrink: 0;
-    background: rgba(124,111,255,0.08);
+    background: var(--white); cursor: pointer;
   }
-  .proj-toggle i { font-size: 14px; color: var(--accent1); transition: transform .3s; }
+  .proj-toggle i { font-size: 14px; transition: transform .3s; }
   .proj-card.open .proj-toggle i { transform: rotate(45deg); }
-  .proj-meta { font-size: 11px; color: var(--text3); margin-bottom: 5px; }
-  .proj-desc { font-size: 12px; color: var(--text2); line-height: 1.6; }
-  .proj-hint { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--accent2); margin-top: 8px; opacity: .7; }
+  .proj-meta { font-size: 11px; color: #666; margin-bottom: 5px; font-weight: 700; letter-spacing: .03em; }
+  .proj-desc { font-size: 12px; color: #444; line-height: 1.65; }
+  .proj-hint { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #888; margin-top: 8px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
 
-  /* PANEL */
-  .proj-panel { display: none; border-top: 1px solid var(--border); }
+  /* ── PANEL ── */
+  .proj-panel { display: none; border-top: 4px solid var(--black); }
   .proj-card.open .proj-panel { display: block; }
-  .viewer-area { background: var(--bg2); height: 260px; position: relative; overflow: hidden; }
+  .viewer-area { height: 260px; position: relative; overflow: hidden; background: #f0f0e8; }
   .viewer-canvas { width: 100%; height: 100%; display: none; }
   .viewer-placeholder {
     position: absolute; inset: 0; display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 10px;
   }
-  .viewer-placeholder i { font-size: 36px; color: var(--text3); }
-  .viewer-placeholder-text { font-size: 12px; color: var(--text3); text-align: center; line-height: 1.6; }
-  .viewer-note { font-size: 11px; color: var(--text3); margin-top: 8px; text-align: center; line-height: 1.5; }
-  .viewer-controls { position: absolute; bottom: 10px; right: 10px; display: none; gap: 6px; z-index: 5; }
+  .viewer-placeholder i { font-size: 36px; color: #aaa; }
+  .viewer-placeholder-text { font-size: 11px; color: #888; text-align: center; line-height: 1.6; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .viewer-controls { position: absolute; bottom: 10px; right: 10px; display: none; gap: 4px; z-index: 5; }
   .viewer-controls button {
-    display: flex; align-items: center; justify-content: center;
-    width: 30px; height: 30px; border: 1px solid var(--border2); border-radius: 50%;
-    background: rgba(10,10,18,0.8); cursor: pointer; transition: border-color .15s;
+    width: 30px; height: 30px; border: 3px solid var(--black);
+    background: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .12s;
   }
-  .viewer-controls button:hover { border-color: var(--accent1); }
-  .viewer-controls button i { font-size: 13px; color: var(--text2); }
-  .proj-detail { padding: 1.25rem; }
-  .proj-detail-title { font-size: 11px; font-weight: 600; margin-bottom: .6rem; color: var(--accent2); text-transform: uppercase; letter-spacing: .08em; }
-  .proj-detail p { font-size: 13px; color: var(--text2); line-height: 1.75; margin-bottom: .75rem; }
-  .proj-detail ul { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: .75rem; }
-  .proj-detail ul li { font-size: 12px; color: var(--text2); padding-left: 1rem; position: relative; line-height: 1.6; }
-  .proj-detail ul li::before { content: "—"; position: absolute; left: 0; color: var(--text3); }
-  .proj-pub {
-    display: inline-flex; align-items: center; gap: 5px; font-size: 11px;
-    padding: 3px 10px; border: 1px solid var(--border2); border-radius: 5px; color: var(--text2);
-  }
-  .badge-award {
-    display: inline-flex; align-items: center; gap: 4px; font-size: 11px;
-    padding: 2px 8px; border-radius: 4px; background: rgba(255,200,0,0.1); color: #e0b000; margin-left: 6px;
-  }
-  .badge-rate {
-    display: inline-flex; font-size: 11px; padding: 2px 8px; border-radius: 4px;
-    background: rgba(62,207,207,0.1); color: var(--accent2); margin-left: 6px;
-  }
+  .viewer-controls button:hover { background: var(--yellow); }
+  .viewer-controls button i { font-size: 13px; }
+  .proj-detail { padding: 1.25rem 1.5rem; border-top: 4px solid var(--black); background: var(--white); }
+  .proj-detail-title { font-family: var(--font); font-size: 10px; font-weight: 900; margin-bottom: .6rem; text-transform: uppercase; letter-spacing: .1em; }
+  .proj-detail p { font-size: 12px; color: #444; line-height: 1.75; margin-bottom: .75rem; }
+  .proj-detail ul { list-style: none; display: flex; flex-direction: column; gap: 5px; margin-bottom: .75rem; }
+  .proj-detail ul li { font-size: 11px; color: #444; padding-left: 1rem; position: relative; line-height: 1.6; }
+  .proj-detail ul li::before { content: "▪"; position: absolute; left: 0; color: var(--black); }
+  .proj-pub { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; padding: 3px 10px; border: 2px solid var(--black); font-weight: 900; text-transform: uppercase; letter-spacing: .05em; }
 
-  /* IMAGES / GALLERY */
-  .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 12px; }
-  .img-card {
-    border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
-    cursor: pointer; transition: all .2s; background: var(--bg2);
-  }
-  .img-card:hover { border-color: var(--accent1); box-shadow: 0 0 20px rgba(124,111,255,0.15); transform: translateY(-2px); }
-  .img-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
-  .img-placeholder {
-    width: 100%; aspect-ratio: 4/3; background: var(--bg3);
-    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px;
-  }
-  .img-placeholder i { font-size: 28px; color: var(--text3); }
-  .img-placeholder span { font-size: 11px; color: var(--text3); }
-  .img-caption { padding: .6rem .75rem; font-size: 12px; color: var(--text2); }
-  .gallery-note {
-    margin-top: 1rem; font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 6px;
-  }
-  .gallery-note code {
-    font-size: 11px; padding: 2px 6px; border-radius: 4px;
-    background: rgba(255,255,255,0.06); color: var(--accent2);
-  }
+  /* ── BADGES ── */
+  .badge-award { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; padding: 2px 7px; background: var(--yellow); border: 2px solid var(--black); margin-left: 5px; font-weight: 900; }
+  .badge-rate  { display: inline-flex; font-size: 10px; padding: 2px 7px; background: var(--blue); color: var(--white); border: 2px solid var(--black); margin-left: 5px; font-weight: 900; }
 
-  /* PDF SECTION */
-  .pdf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  /* ── GALLERY GRIDS ── */
+  .gallery-mosaic {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 4px solid var(--black);
+  }
+  .gallery-cell {
+    border-right: 4px solid var(--black);
+    border-bottom: 4px solid var(--black);
+    overflow: hidden; cursor: pointer; position: relative;
+    transition: opacity .15s;
+  }
+  .gallery-cell:nth-child(3n) { border-right: none; }
+  .gallery-cell img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform .3s; }
+  .gallery-cell:hover img { transform: scale(1.04); }
+  .gallery-cell-placeholder {
+    width: 100%; aspect-ratio: 4/3;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  }
+  .gallery-cell:nth-child(6n+1) .gallery-cell-placeholder { background: var(--red); }
+  .gallery-cell:nth-child(6n+2) .gallery-cell-placeholder { background: var(--yellow); }
+  .gallery-cell:nth-child(6n+3) .gallery-cell-placeholder { background: var(--blue); }
+  .gallery-cell:nth-child(6n+4) .gallery-cell-placeholder { background: var(--yellow); }
+  .gallery-cell:nth-child(6n+5) .gallery-cell-placeholder { background: var(--red); }
+  .gallery-cell:nth-child(6n+6) .gallery-cell-placeholder { background: var(--white); border: none; }
+  .gallery-cell-placeholder i { font-size: 28px; color: var(--white); }
+  .gallery-cell-placeholder span { font-size: 10px; color: var(--white); font-weight: 900; text-transform: uppercase; letter-spacing: .06em; text-align: center; padding: 0 .5rem; }
+  .gallery-cell:nth-child(6n+6) .gallery-cell-placeholder i,
+  .gallery-cell:nth-child(6n+6) .gallery-cell-placeholder span { color: var(--black); }
+  .gallery-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: var(--black); color: var(--white);
+    padding: .35rem .6rem; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em;
+    transform: translateY(100%); transition: transform .2s;
+  }
+  .gallery-cell:hover .gallery-caption { transform: translateY(0); }
+  .gallery-note { padding: 1rem 1.5rem; font-size: 11px; color: #888; display: flex; align-items: center; gap: 6px; border-top: 4px solid var(--black); font-weight: 700; }
+  .gallery-note code { font-size: 10px; padding: 2px 6px; background: var(--yellow); border: 2px solid var(--black); font-weight: 900; }
+
+  /* ── PDF CARDS ── */
+  .pdf-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 4px solid var(--black); }
   .pdf-card {
-    display: flex; align-items: center; gap: 14px; padding: 1rem 1.25rem;
-    border: 1px solid var(--border); border-radius: var(--radius);
-    background: rgba(255,255,255,0.02); transition: all .2s; cursor: pointer;
-    text-decoration: none;
+    display: flex; align-items: center; gap: 14px; padding: 1.1rem 1.5rem;
+    border-right: 4px solid var(--black); border-bottom: 4px solid var(--black);
+    transition: background .12s; cursor: pointer; text-decoration: none; color: var(--black);
   }
-  .pdf-card:hover { border-color: var(--accent3); box-shadow: 0 0 20px rgba(255,111,176,0.1); }
-  .pdf-icon {
-    width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0;
-    background: rgba(255,111,176,0.1); border: 1px solid rgba(255,111,176,0.2);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .pdf-icon i { font-size: 20px; color: var(--accent3); }
-  .pdf-info {}
-  .pdf-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; line-height: 1.3; }
-  .pdf-meta { font-size: 11px; color: var(--text3); }
-  .pdf-note { margin-top: 1rem; font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 6px; }
-  .pdf-note code { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.06); color: var(--accent3); }
+  .pdf-card:nth-child(2n) { border-right: none; }
+  .pdf-card:hover { background: var(--yellow); }
+  .pdf-icon { width: 40px; height: 40px; border: 3px solid var(--black); display: flex; align-items: center; justify-content: center; background: var(--red); flex-shrink: 0; }
+  .pdf-icon i { font-size: 20px; color: var(--white); }
+  .pdf-title { font-family: var(--font); font-size: 12px; font-weight: 900; margin-bottom: 3px; line-height: 1.3; }
+  .pdf-meta { font-size: 10px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .pdf-note { padding: 1rem 1.5rem; font-size: 11px; color: #888; display: flex; align-items: center; gap: 6px; border-top: 4px solid var(--black); font-weight: 700; }
+  .pdf-note code { font-size: 10px; padding: 2px 6px; background: var(--red); color: var(--white); border: 2px solid var(--black); font-weight: 900; }
 
-  /* PUBS / EXP */
-  .item { padding: .875rem 0; border-top: 1px solid var(--border); }
-  .item:first-of-type { border-top: none; padding-top: 0; }
-  .item-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; line-height: 1.4; }
-  .item-meta { font-size: 12px; color: var(--text3); margin-bottom: 4px; }
-  .item-desc { font-size: 13px; color: var(--text2); line-height: 1.65; }
-  .exp-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
-  .exp-co { font-size: 14px; font-weight: 600; }
-  .exp-date { font-size: 12px; color: var(--text3); }
+  /* ── PUBS ── */
+  .pubs-list { padding: 0 2.5rem; }
+  .item { padding: 1rem 0; border-bottom: 3px solid var(--black); display: grid; grid-template-columns: 40px 1fr; gap: 1rem; align-items: start; }
+  .item:last-child { border-bottom: none; }
+  .item-num { font-family: var(--font); font-size: 22px; font-weight: 900; color: #ddd; line-height: 1; padding-top: 2px; }
+  .item-title { font-family: var(--font); font-size: 13px; font-weight: 900; margin-bottom: 3px; line-height: 1.35; }
+  .item-meta { font-size: 11px; color: #666; margin-bottom: 3px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  .item-desc { font-size: 12px; color: #555; line-height: 1.5; }
 
-  /* AWARDS */
-  .awards-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(165px,1fr)); gap: 8px; }
+  /* ── AWARDS ── */
+  .awards-mosaic { display: grid; grid-template-columns: repeat(4,1fr); }
   .award-card {
-    padding: .875rem 1rem; border: 1px solid var(--border); border-radius: var(--radius);
-    background: rgba(255,255,255,0.02); transition: all .2s;
+    padding: 1.25rem; border-right: 4px solid var(--black); border-bottom: 4px solid var(--black);
+    transition: opacity .15s;
   }
-  .award-card:hover { border-color: var(--border2); }
-  .award-icon { font-size: 16px; color: #d4a017; margin-bottom: 6px; }
-  .award-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; line-height: 1.3; }
-  .award-year { font-size: 11px; color: var(--text3); }
+  .award-card:nth-child(4n) { border-right: none; }
+  .award-card:nth-child(8n+1) { background: var(--yellow); }
+  .award-card:nth-child(8n+2) { background: var(--white); }
+  .award-card:nth-child(8n+3) { background: var(--white); }
+  .award-card:nth-child(8n+4) { background: var(--red); color: var(--white); }
+  .award-card:nth-child(8n+5) { background: var(--white); }
+  .award-card:nth-child(8n+6) { background: var(--blue); color: var(--white); }
+  .award-card:nth-child(8n+7) { background: var(--yellow); }
+  .award-card:nth-child(8n+8) { background: var(--white); }
+  .award-icon { font-size: 20px; margin-bottom: 8px; }
+  .award-name { font-family: var(--font); font-size: 12px; font-weight: 900; margin-bottom: 3px; line-height: 1.3; }
+  .award-year { font-size: 10px; font-weight: 700; opacity: .7; text-transform: uppercase; letter-spacing: .08em; }
 
-  /* HOBBIES */
-  .hobbies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 12px; }
+  /* ── TEACHING ── */
+  .teaching-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 4px solid var(--black); }
+  .teaching-item {
+    padding: 1rem 1.5rem; border-right: 4px solid var(--black); border-bottom: 4px solid var(--black);
+    transition: background .12s;
+  }
+  .teaching-item:nth-child(2n) { border-right: none; }
+  .teaching-item:hover { background: #f5f5ee; }
+  .exp-co { font-family: var(--font); font-size: 12px; font-weight: 900; margin-bottom: 2px; }
+  .exp-date { font-size: 10px; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+
+  /* ── INDUSTRY ── */
+  .industry-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 4px solid var(--black); }
+  .industry-card {
+    padding: 1.5rem; border-right: 4px solid var(--black);
+    transition: background .12s;
+  }
+  .industry-card:last-child { border-right: none; }
+  .industry-card:nth-child(1) { background: var(--blue); color: var(--white); }
+  .industry-card:nth-child(2) { background: var(--white); }
+  .industry-card:nth-child(3) { background: var(--white); }
+  .industry-role { font-family: var(--font); font-size: 13px; font-weight: 900; margin-bottom: 4px; line-height: 1.3; }
+  .industry-co { font-size: 12px; font-weight: 700; margin-bottom: 4px; opacity: .8; }
+  .industry-date { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; opacity: .6; margin-bottom: 8px; }
+  .industry-desc { font-size: 12px; line-height: 1.6; opacity: .8; }
+
+  /* ── HOBBIES ── */
+  .hobbies-mosaic { display: grid; grid-template-columns: repeat(3,1fr); border-top: 4px solid var(--black); }
   .hobby-card {
-    border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
-    background: var(--bg2); transition: all .2s; cursor: pointer;
+    border-right: 4px solid var(--black); border-bottom: 4px solid var(--black);
+    overflow: hidden; cursor: pointer; transition: opacity .15s;
   }
-  .hobby-card:hover { border-color: var(--accent2); box-shadow: 0 0 20px rgba(62,207,207,0.12); transform: translateY(-2px); }
-  .hobby-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+  .hobby-card:nth-child(3n) { border-right: none; }
+  .hobby-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform .3s; }
+  .hobby-card:hover .hobby-img { transform: scale(1.04); }
   .hobby-placeholder {
-    width: 100%; aspect-ratio: 4/3; background: var(--bg3);
-    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px;
+    width: 100%; aspect-ratio: 4/3;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
   }
-  .hobby-placeholder i { font-size: 32px; }
-  .hobby-placeholder span { font-size: 12px; color: var(--text3); }
-  .hobby-caption { padding: .6rem .75rem; }
-  .hobby-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
-  .hobby-desc { font-size: 11px; color: var(--text3); }
+  .hobby-card:nth-child(3n+1) .hobby-placeholder { background: var(--red); }
+  .hobby-card:nth-child(3n+2) .hobby-placeholder { background: var(--yellow); }
+  .hobby-card:nth-child(3n+3) .hobby-placeholder { background: var(--blue); }
+  .hobby-placeholder i { font-size: 32px; color: var(--white); }
+  .hobby-placeholder .hobby-ph-lbl { font-size: 11px; color: var(--white); font-weight: 900; text-transform: uppercase; letter-spacing: .06em; }
+  .hobby-info {
+    padding: .65rem 1rem; border-top: 4px solid var(--black);
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .hobby-name { font-family: var(--font); font-size: 12px; font-weight: 900; text-transform: uppercase; }
+  .hobby-desc { font-size: 10px; color: #666; font-weight: 700; }
 
-  /* LIGHTBOX */
-  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.9); z-index: 1000; align-items: center; justify-content: center; }
-  .lightbox.open { display: flex; }
-  .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 10px; object-fit: contain; }
-  .lightbox-close { position: absolute; top: 20px; right: 24px; font-size: 28px; color: #fff; cursor: pointer; background: none; border: none; }
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-top: 4px solid var(--black);
+  }
+  .contact-left {
+    padding: 2.5rem; border-right: 4px solid var(--black);
+    background: var(--blue); color: var(--white);
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .contact-heading { font-family: var(--font); font-size: 28px; font-weight: 900; line-height: 1.1; margin-bottom: .5rem; }
+  .contact-sub { font-size: 13px; opacity: .8; line-height: 1.6; }
+  .contact-right { padding: 2.5rem; display: flex; flex-direction: column; gap: .5rem; }
+  .contact-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font); font-size: 11px; font-weight: 900;
+    padding: 10px 16px; border: 3px solid var(--black);
+    text-transform: uppercase; letter-spacing: .05em;
+    transition: background .12s, color .12s; background: var(--white); color: var(--black);
+    width: fit-content;
+  }
+  .contact-pill:hover { background: var(--black); color: var(--white); }
 
-  /* FOOTER */
+  /* ── FOOTER ── */
   .footer {
-    padding: 2rem; display: flex; justify-content: space-between; align-items: center;
-    border-top: 1px solid var(--border);
+    display: flex; align-items: stretch;
+    border-top: 4px solid var(--black);
   }
-  .footer-left { font-size: 12px; color: var(--text3); }
-  .footer-right { display: flex; gap: 1.25rem; }
-  .footer-right a { font-size: 12px; color: var(--text3); transition: color .15s; }
-  .footer-right a:hover { color: var(--text); }
+  .footer-block {
+    padding: 1.1rem 1.5rem; border-right: 4px solid var(--black);
+    font-family: var(--font); font-size: 11px; font-weight: 900;
+    text-transform: uppercase; letter-spacing: .05em; display: flex; align-items: center;
+  }
+  .footer-block:last-child { border-right: none; }
+  .footer-block.yellow { background: var(--yellow); }
+  .footer-block.red { background: var(--red); color: var(--white); }
+  .footer-block.flex1 { flex: 1; }
+  .footer-block a { color: inherit; margin-left: 1.25rem; transition: opacity .15s; }
+  .footer-block a:first-child { margin-left: 0; }
+  .footer-block a:hover { opacity: .6; }
 
-  @media (max-width: 680px) {
+  /* ── LIGHTBOX ── */
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 1000; align-items: center; justify-content: center; }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border: 6px solid var(--white); }
+  .lightbox-close { position: absolute; top: 20px; right: 24px; font-size: 28px; color: var(--white); cursor: pointer; background: none; border: none; font-family: var(--font); font-weight: 900; }
+
+  @media (max-width: 700px) {
     .hero { grid-template-columns: 1fr; }
-    .headshot-wrap { width: 100px; height: 100px; }
-    .hero-name { font-size: 34px; }
-    .projects-grid, .pdf-grid { grid-template-columns: 1fr; }
-    .two-col { grid-template-columns: 1fr; }
-    .col-label { display: none; }
-    .stats-row { grid-template-columns: repeat(2,1fr); }
-    .nav-links { gap: 1rem; }
+    .hero-right { display: none; }
+    .hero-name { font-size: 38px; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .stat:nth-child(2) { border-bottom: 4px solid var(--black); }
+    .projects-grid, .pdf-grid, .contact-grid, .teaching-grid { grid-template-columns: 1fr; }
+    .gallery-mosaic, .hobbies-mosaic { grid-template-columns: 1fr 1fr; }
+    .awards-mosaic { grid-template-columns: 1fr 1fr; }
+    .industry-row { grid-template-columns: 1fr; }
+    .nav-links a { padding: .75rem .7rem; font-size: 10px; }
+    .pubs-list { padding: 0 1rem; }
   }
 </style>
 </head>
 <body>
-<div class="gradient-bg"></div>
-<div class="content">
+<div class="page">
 
+<!-- NAV -->
 <nav class="nav">
-  <span class="nav-name">Shubham Rohal</span>
+  <div class="nav-logo">S.R.</div>
   <div class="nav-links">
     <a href="#research">Research</a>
     <a href="#gallery">Gallery</a>
@@ -330,30 +447,35 @@
     <a href="#hobbies">Hobbies</a>
     <a href="#contact">Contact</a>
   </div>
+  <div class="nav-accent1"></div>
+  <div class="nav-accent2"></div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-left">
-    <div class="hero-label">PhD Researcher · EECS · UC Merced</div>
-    <div class="hero-name">Shubham<br>Rohal</div>
-    <div class="hero-role">Building sensing systems that make everyday surfaces and objects intelligent — through origami-inspired structures, wearable sensing, and multi-modal IoT.</div>
+  <div class="hero-main">
+    <div>
+      <div class="hero-label">PhD Researcher · EECS · University of California, Merced</div>
+      <div class="hero-name">Shubham<br>Rohal</div>
+      <div class="hero-role">Building sensing systems that make everyday surfaces intelligent — through origami-inspired structures, wearable sensing, and multi-modal IoT.</div>
+    </div>
     <div class="hero-links">
-      <a class="pill" href="mailto:srohal@ucmerced.edu"><i class="ti ti-mail"></i>srohal@ucmerced.edu</a>
-      <a class="pill" href="https://scholar.google.com/citations?user=8EqXZR8AAAAJ&hl=en" target="_blank"><i class="ti ti-book"></i>Google Scholar</a>
-      <a class="pill" href="https://sites.google.com/view/srohal" target="_blank"><i class="ti ti-world"></i>Personal Site</a>
+      <a class="pill" href="mailto:srohal@ucmerced.edu"><i class="ti ti-mail"></i>Email</a>
+      <a class="pill" href="https://scholar.google.com/citations?user=8EqXZR8AAAAJ&hl=en" target="_blank"><i class="ti ti-book"></i>Scholar</a>
+      <a class="pill" href="https://sites.google.com/view/srohal" target="_blank"><i class="ti ti-world"></i>Website</a>
       <a class="pill" href="https://github.com/sr004" target="_blank"><i class="ti ti-brand-github"></i>GitHub</a>
     </div>
   </div>
-  <div class="headshot-wrap">
-    <div class="headshot-inner" id="headshotInner">
-      <img id="headshotImg" src="images/headshot.jpg" alt="Shubham Rohal"
-        onerror="this.style.display='none';document.getElementById('headshotFallback').style.display='flex'">
-      <div class="headshot-placeholder" id="headshotFallback" style="display:none">
+  <div class="hero-right">
+    <div class="headshot-block">
+      <img src="images/headshot.jpg" alt="Shubham Rohal"
+        onerror="this.style.display='none';document.getElementById('hsf').style.display='flex'">
+      <div class="headshot-fallback" id="hsf" style="display:none">
         <i class="ti ti-user-circle"></i>
         <span>Add headshot.jpg<br>to images/</span>
       </div>
     </div>
+    <div class="hero-color-block"></div>
   </div>
 </div>
 
@@ -361,140 +483,137 @@
 <div class="stats-row">
   <div class="stat"><div class="stat-val">10+</div><div class="stat-lbl">Publications</div></div>
   <div class="stat"><div class="stat-val">2</div><div class="stat-lbl">Patents</div></div>
-  <div class="stat"><div class="stat-val">7+</div><div class="stat-lbl">Awards & honors</div></div>
-  <div class="stat"><div class="stat-val">10+</div><div class="stat-lbl">Students mentored</div></div>
+  <div class="stat"><div class="stat-val">7+</div><div class="stat-lbl">Awards</div></div>
+  <div class="stat"><div class="stat-val">10+</div><div class="stat-lbl">Students Mentored</div></div>
 </div>
 
 <!-- INTERESTS -->
 <div class="section">
-  <div class="section-eyebrow">Research interests</div>
+  <div class="section-header">
+    <div class="section-color-tab yellow-tab"></div>
+    <div class="section-eyebrow">Research Interests</div>
+  </div>
   <div class="interests">
     <span class="interest-tag">Ubiquitous Computing</span>
     <span class="interest-tag">Wearable Systems</span>
     <span class="interest-tag">Internet of Things</span>
-    <span class="interest-tag">Human-Computer Interaction</span>
+    <span class="interest-tag">Human–Computer Interaction</span>
     <span class="interest-tag">Origami-Inspired Sensing</span>
     <span class="interest-tag">Multi-Modal Sensing</span>
     <span class="interest-tag">Physical Augmentation</span>
   </div>
 </div>
 
-<!-- RESEARCH + 3D VIEWER -->
+<!-- RESEARCH + 3D -->
 <div class="section" id="research">
-  <div class="section-eyebrow">Active research projects — click any card to explore in 3D</div>
+  <div class="section-header">
+    <div class="section-color-tab red-tab"></div>
+    <div class="section-eyebrow">Active Research — Click any card to expand 3D model</div>
+  </div>
   <div class="projects-grid" id="projectsGrid"></div>
 </div>
 
 <!-- RESEARCH GALLERY -->
 <div class="section" id="gallery">
-  <div class="section-eyebrow">Research gallery — prototypes, lab setups & paper figures</div>
-  <div class="images-grid" id="researchGallery"></div>
-  <div class="gallery-note">
-    <i class="ti ti-info-circle" style="font-size:14px"></i>
-    Add images to <code>images/</code> folder in the repo — filenames become captions automatically.
+  <div class="section-header">
+    <div class="section-color-tab blue-tab"></div>
+    <div class="section-eyebrow">Research Gallery — Prototypes &amp; Lab Setups</div>
   </div>
+  <div class="gallery-mosaic" id="researchGallery"></div>
+  <div class="gallery-note"><i class="ti ti-info-circle" style="font-size:14px"></i>Add photos to <code>images/</code> in the repo — filenames become captions.</div>
 </div>
 
-<!-- PAPERS / PDFs -->
+<!-- PAPERS -->
 <div class="section" id="papers">
-  <div class="section-eyebrow">Papers & documents</div>
-  <div class="pdf-grid" id="pdfGrid"></div>
-  <div class="pdf-note">
-    <i class="ti ti-info-circle" style="font-size:14px"></i>
-    Add PDFs to the <code>papers/</code> folder in the repo to make them appear here.
+  <div class="section-header">
+    <div class="section-color-tab yellow-tab"></div>
+    <div class="section-eyebrow">Papers &amp; Documents</div>
   </div>
+  <div class="pdf-grid" id="pdfGrid"></div>
+  <div class="pdf-note"><i class="ti ti-info-circle" style="font-size:14px"></i>Add PDFs to <code>papers/</code> in the repo.</div>
 </div>
 
 <!-- PUBLICATIONS -->
 <div class="section" id="pubs">
-  <div class="section-eyebrow">Selected publications</div>
-  <div class="two-col">
-    <div class="col-label">Peer-reviewed venues</div>
-    <div>
-      <div class="item">
-        <div class="item-title">Don't Crosstalk to Me: Origami Structure-Augmented Sensing for Scalable Surface Pressure Monitoring <span class="badge-rate">18% accept</span></div>
-        <div class="item-meta">SenSys 2024</div>
-        <div class="item-desc">Shubham Rohal, Dong Yoon Lee, Carlos Ruiz, Joshua Zhang, Jonathon Fagert, Jun Han, Shijia Pan.</div>
-      </div>
-      <div class="item">
-        <div class="item-title">AutoLoc: Autonomous Sensor Location Configuration via Cross-Modal Sensing</div>
-        <div class="item-meta">Frontiers in Big Data, 2022</div>
-        <div class="item-desc">Shubham Rohal, Yue Zhang, Carlos Ruiz, Shijia Pan.</div>
-      </div>
-      <div class="item">
-        <div class="item-title">Demo Abstract: MOOCA — Miura-Ori Origami-Based Configurable Shelf-Liner <span class="badge-award"><i class="ti ti-trophy"></i>Best Demo</span></div>
-        <div class="item-meta">SenSys 2022</div>
-        <div class="item-desc">Shubham Rohal, Carlos Ruiz, Yue Zhang, Shijia Pan.</div>
-      </div>
-      <div class="item">
-        <div class="item-title">Poster: Sedentary Posture Muscle Monitoring via Active Vibratory Sensing <span class="badge-award"><i class="ti ti-trophy"></i>Best Poster</span></div>
-        <div class="item-meta">IPSN 2022 · CPS-IoT Week</div>
-        <div class="item-desc">Shubham Rohal, Shreya Shriram, Zhizhang Hu, Yue Zhang, Phuc Nguyen, Shijia Pan.</div>
-      </div>
-      <div class="item">
-        <div class="item-title">FinePose: Fine-Grained Postural Muscle Profiling via Haptic Vibration Signals</div>
-        <div class="item-meta">BodySys 2022 · MobiSys</div>
-        <div class="item-desc">Shubham Rohal, Shreya Shriram, Phuc Nguyen, Shijia Pan.</div>
-      </div>
-      <div class="item">
-        <div class="item-title">Structural Intelligence Enabled Battery-Less Mobile Sensing for Air Quality Monitoring</div>
-        <div class="item-meta">EnsSys 2025 · CPS-IoT Week</div>
-        <div class="item-desc">Shubham Rohal, Joshua Zhang, Shijia Pan.</div>
-      </div>
-      <div class="item">
-        <div class="item-title">OriFeel: Origami-Inspired Actuation for Force-Based Tactile Feedback on Ambient Surfaces</div>
-        <div class="item-meta">CS-ArXiv 2025</div>
-        <div class="item-desc">Shubham Rohal, Shijia Pan.</div>
-      </div>
-      <div class="item">
-        <div class="item-title">Can On-Body Sensing Be Spatial Adaptive?</div>
-        <div class="item-meta">CS-ArXiv 2025</div>
-        <div class="item-desc">Shubham Rohal, Dong Yoon Lee, Phuc Nguyen, Shijia Pan.</div>
-      </div>
-      <div class="item">
-        <div class="item-title">Mitigating Sensor Data Bias from User Operational Variability via Causal Intervention</div>
-        <div class="item-meta">HumanSys 2025 · CPS-IoT Week</div>
-        <div class="item-desc">Zhizhang Hu, Shubham Rohal, Shijia Pan.</div>
-      </div>
-      <div class="item">
-        <div class="item-title">CPA: Cyber-Physical Augmentation for Vibration Sensing in Autonomous Retails</div>
-        <div class="item-meta">HotMobile 2023</div>
-        <div class="item-desc">Yue Zhang, Carlos Ruiz, Shubham Rohal, Shijia Pan.</div>
-      </div>
+  <div class="section-header">
+    <div class="section-color-tab red-tab"></div>
+    <div class="section-eyebrow">Selected Publications</div>
+  </div>
+  <div class="pubs-list" style="padding-top:1.5rem">
+    <div class="item">
+      <div class="item-num">01</div>
+      <div><div class="item-title">Don't Crosstalk to Me: Origami Structure-Augmented Sensing for Scalable Surface Pressure Monitoring <span class="badge-rate">18% accept</span></div><div class="item-meta">SenSys 2024</div><div class="item-desc">Shubham Rohal, Dong Yoon Lee, Carlos Ruiz, Joshua Zhang, Jonathon Fagert, Jun Han, Shijia Pan.</div></div>
+    </div>
+    <div class="item">
+      <div class="item-num">02</div>
+      <div><div class="item-title">AutoLoc: Autonomous Sensor Location Configuration via Cross-Modal Sensing</div><div class="item-meta">Frontiers in Big Data, 2022</div><div class="item-desc">Shubham Rohal, Yue Zhang, Carlos Ruiz, Shijia Pan.</div></div>
+    </div>
+    <div class="item">
+      <div class="item-num">03</div>
+      <div><div class="item-title">Demo Abstract: MOOCA — Miura-Ori Origami-Based Configurable Shelf-Liner <span class="badge-award"><i class="ti ti-trophy"></i>Best Demo</span></div><div class="item-meta">SenSys 2022</div><div class="item-desc">Shubham Rohal, Carlos Ruiz, Yue Zhang, Shijia Pan.</div></div>
+    </div>
+    <div class="item">
+      <div class="item-num">04</div>
+      <div><div class="item-title">Poster: Sedentary Posture Muscle Monitoring via Active Vibratory Sensing <span class="badge-award"><i class="ti ti-trophy"></i>Best Poster</span></div><div class="item-meta">IPSN 2022 · CPS-IoT Week</div><div class="item-desc">Shubham Rohal, Shreya Shriram, Zhizhang Hu, Yue Zhang, Phuc Nguyen, Shijia Pan.</div></div>
+    </div>
+    <div class="item">
+      <div class="item-num">05</div>
+      <div><div class="item-title">FinePose: Fine-Grained Postural Muscle Profiling via Haptic Vibration Signals</div><div class="item-meta">BodySys 2022 · MobiSys</div><div class="item-desc">Shubham Rohal, Shreya Shriram, Phuc Nguyen, Shijia Pan.</div></div>
+    </div>
+    <div class="item">
+      <div class="item-num">06</div>
+      <div><div class="item-title">Structural Intelligence Enabled Battery-Less Mobile Sensing for Air Quality Monitoring</div><div class="item-meta">EnsSys 2025 · CPS-IoT Week</div><div class="item-desc">Shubham Rohal, Joshua Zhang, Shijia Pan.</div></div>
+    </div>
+    <div class="item">
+      <div class="item-num">07</div>
+      <div><div class="item-title">OriFeel: Origami-Inspired Actuation for Force-Based Tactile Feedback on Ambient Surfaces</div><div class="item-meta">CS-ArXiv 2025</div><div class="item-desc">Shubham Rohal, Shijia Pan.</div></div>
+    </div>
+    <div class="item">
+      <div class="item-num">08</div>
+      <div><div class="item-title">Can On-Body Sensing Be Spatial Adaptive?</div><div class="item-meta">CS-ArXiv 2025</div><div class="item-desc">Shubham Rohal, Dong Yoon Lee, Phuc Nguyen, Shijia Pan.</div></div>
+    </div>
+    <div class="item">
+      <div class="item-num">09</div>
+      <div><div class="item-title">Mitigating Sensor Data Bias from User Operational Variability via Causal Intervention</div><div class="item-meta">HumanSys 2025 · CPS-IoT Week</div><div class="item-desc">Zhizhang Hu, Shubham Rohal, Shijia Pan.</div></div>
+    </div>
+    <div class="item">
+      <div class="item-num">10</div>
+      <div><div class="item-title">CPA: Cyber-Physical Augmentation for Vibration Sensing in Autonomous Retails</div><div class="item-meta">HotMobile 2023</div><div class="item-desc">Yue Zhang, Carlos Ruiz, Shubham Rohal, Shijia Pan.</div></div>
     </div>
   </div>
 </div>
 
 <!-- PATENTS -->
 <div class="section">
-  <div class="section-eyebrow">Patents</div>
-  <div class="two-col">
-    <div class="col-label">Filed</div>
-    <div>
-      <div class="item">
-        <div class="item-title">Programmable Smart-Sensing Shelf Liner Apparatus for Autonomous Retail</div>
-        <div class="item-meta">US Patent App. 18/487,059</div>
-        <div class="item-desc">Shijia Pan, Shubham Rohal, Yue Zhang, Carlos Ruiz.</div>
-      </div>
-      <div class="item">
-        <div class="item-title">Self-Adaptive Airflow Regulation Structure Enabled Batteryless PM2.5 Sensing</div>
-        <div class="item-meta">Provisional · UC-2025-976-1-PRV</div>
-        <div class="item-desc">Shijia Pan, Joshua Zhang, Shubham Rohal.</div>
-      </div>
+  <div class="section-header">
+    <div class="section-color-tab blue-tab"></div>
+    <div class="section-eyebrow">Patents</div>
+  </div>
+  <div class="pubs-list" style="padding-top:1rem">
+    <div class="item">
+      <div class="item-num">P1</div>
+      <div><div class="item-title">Programmable Smart-Sensing Shelf Liner Apparatus for Autonomous Retail</div><div class="item-meta">US Patent App. 18/487,059</div><div class="item-desc">Shijia Pan, Shubham Rohal, Yue Zhang, Carlos Ruiz.</div></div>
+    </div>
+    <div class="item">
+      <div class="item-num">P2</div>
+      <div><div class="item-title">Self-Adaptive Airflow Regulation Structure Enabled Batteryless PM2.5 Sensing</div><div class="item-meta">Provisional · UC-2025-976-1-PRV</div><div class="item-desc">Shijia Pan, Joshua Zhang, Shubham Rohal.</div></div>
     </div>
   </div>
 </div>
 
 <!-- AWARDS -->
 <div class="section">
-  <div class="section-eyebrow">Awards & honors</div>
-  <div class="awards-grid">
+  <div class="section-header">
+    <div class="section-color-tab yellow-tab"></div>
+    <div class="section-eyebrow">Awards &amp; Honors</div>
+  </div>
+  <div class="awards-mosaic">
     <div class="award-card"><div class="award-icon"><i class="ti ti-trophy"></i></div><div class="award-name">SenSys Best Demo Award</div><div class="award-year">2022</div></div>
     <div class="award-card"><div class="award-icon"><i class="ti ti-trophy"></i></div><div class="award-name">IPSN Best Poster Award</div><div class="award-year">2022</div></div>
     <div class="award-card"><div class="award-icon"><i class="ti ti-award"></i></div><div class="award-name">UC Merced Grad Slam Finalist</div><div class="award-year">2025</div></div>
     <div class="award-card"><div class="award-icon"><i class="ti ti-award"></i></div><div class="award-name">CITRIS Health Innovation Scholarship</div><div class="award-year">2024</div></div>
     <div class="award-card"><div class="award-icon"><i class="ti ti-award"></i></div><div class="award-name">CITRIS Smart Health Masterclass</div><div class="award-year">2025</div></div>
-    <div class="award-card"><div class="award-icon"><i class="ti ti-school"></i></div><div class="award-name">UC Merced EECS Bobcat Fellowship</div><div class="award-year">2021, 2022</div></div>
+    <div class="award-card"><div class="award-icon"><i class="ti ti-school"></i></div><div class="award-name">EECS Bobcat Fellowship</div><div class="award-year">2021, 2022</div></div>
     <div class="award-card"><div class="award-icon"><i class="ti ti-plane"></i></div><div class="award-name">HotMobile Travel Award</div><div class="award-year">2023</div></div>
     <div class="award-card"><div class="award-icon"><i class="ti ti-plane"></i></div><div class="award-name">BuildSys Travel Award</div><div class="award-year">2024</div></div>
   </div>
@@ -502,256 +621,213 @@
 
 <!-- TEACHING -->
 <div class="section" id="teaching">
-  <div class="section-eyebrow">Teaching</div>
-  <div class="two-col">
-    <div class="col-label">UC Merced · Teaching Assistant · Jan 2020 – Present</div>
-    <div>
-      <div class="item"><div class="exp-row"><span class="exp-co">Discrete Mathematics (CSE 15)</span><span class="exp-date">Fall 2025</span></div><div class="item-desc" style="font-size:12px">Lab sessions on integers, graphs, and logical structures.</div></div>
-      <div class="item"><div class="exp-row"><span class="exp-co">Intro to Computing (CSE 19)</span><span class="exp-date">Fall 2023</span></div><div class="item-desc" style="font-size:12px">Python and OOP intro for non-CS majors.</div></div>
-      <div class="item"><div class="exp-row"><span class="exp-co">Computer Networks (CSE 160)</span><span class="exp-date">Fall 2023</span></div><div class="item-desc" style="font-size:12px">NesC / TinyOS; message-passing protocols.</div></div>
-      <div class="item"><div class="exp-row"><span class="exp-co">Algorithm Design & Analysis (CSE 100)</span><span class="exp-date">Fall/Spring 2020–21</span></div></div>
-      <div class="item"><div class="exp-row"><span class="exp-co">Data Structures (CSE 30)</span><span class="exp-date">Fall 21, Spring 24</span></div></div>
-      <div class="item"><div class="exp-row"><span class="exp-co">Advanced Programming / OpenGL (CSE 24)</span><span class="exp-date">Spring 2023</span></div></div>
-      <div class="item"><div class="exp-row"><span class="exp-co">OOP in C++ (CSE 165)</span><span class="exp-date">Spring 2020</span></div></div>
-    </div>
+  <div class="section-header">
+    <div class="section-color-tab red-tab"></div>
+    <div class="section-eyebrow">Teaching — UC Merced · TA Since 2020</div>
+  </div>
+  <div class="teaching-grid">
+    <div class="teaching-item"><div class="exp-co">Discrete Mathematics (CSE 15)</div><div class="exp-date">Fall 2025</div></div>
+    <div class="teaching-item"><div class="exp-co">Intro to Computing (CSE 19)</div><div class="exp-date">Fall 2023</div></div>
+    <div class="teaching-item"><div class="exp-co">Computer Networks (CSE 160)</div><div class="exp-date">Fall 2023</div></div>
+    <div class="teaching-item"><div class="exp-co">Algorithm Design &amp; Analysis (CSE 100)</div><div class="exp-date">Fall/Spring 2020–21</div></div>
+    <div class="teaching-item"><div class="exp-co">Data Structures (CSE 30)</div><div class="exp-date">Fall 21, Spring 24</div></div>
+    <div class="teaching-item"><div class="exp-co">Advanced Programming / OpenGL (CSE 24)</div><div class="exp-date">Spring 2023</div></div>
+    <div class="teaching-item"><div class="exp-co">OOP in C++ (CSE 165)</div><div class="exp-date">Spring 2020</div></div>
+    <div class="teaching-item"><div class="exp-co">Intro to Computing (CSE 19)</div><div class="exp-date">Fall 2023</div></div>
   </div>
 </div>
 
 <!-- INDUSTRY -->
 <div class="section">
-  <div class="section-eyebrow">Industry experience</div>
-  <div class="two-col">
-    <div class="col-label">Work</div>
-    <div>
-      <div class="item">
-        <div class="exp-row"><span class="exp-co">Computer Vision Intern · AiFi Inc., Santa Clara</span><span class="exp-date">May – Aug 2021</span></div>
-        <div class="item-desc">Multi-modal sensor fusion (camera + geophone) for autonomous retail pickup/put-down detection.</div>
-      </div>
-      <div class="item"><div class="exp-row"><span class="exp-co">Full Stack Intern · Goglamrs, Chandigarh</span><span class="exp-date">Sep 2017 – Nov 2018</span></div></div>
-      <div class="item"><div class="exp-row"><span class="exp-co">Java Development Trainee · AlphaIt World</span><span class="exp-date">Jun – Aug 2015</span></div></div>
+  <div class="section-header">
+    <div class="section-color-tab blue-tab"></div>
+    <div class="section-eyebrow">Industry Experience</div>
+  </div>
+  <div class="industry-row">
+    <div class="industry-card">
+      <div class="industry-role">Computer Vision Intern</div>
+      <div class="industry-co">AiFi Inc. · Santa Clara, CA</div>
+      <div class="industry-date">May – Aug 2021</div>
+      <div class="industry-desc">Multi-modal sensor fusion (camera + geophone) for autonomous retail pickup/put-down detection.</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-role">Full Stack Intern</div>
+      <div class="industry-co">Goglamrs · Chandigarh, India</div>
+      <div class="industry-date">Sep 2017 – Nov 2018</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-role">Java Development Trainee</div>
+      <div class="industry-co">AlphaIt World · Chandigarh</div>
+      <div class="industry-date">Jun – Aug 2015</div>
     </div>
   </div>
 </div>
 
 <!-- HOBBIES -->
 <div class="section" id="hobbies">
-  <div class="section-eyebrow">Beyond research — hobbies & life</div>
-  <div class="hobbies-grid" id="hobbiesGrid"></div>
-  <div class="gallery-note" style="margin-top:1rem">
-    <i class="ti ti-info-circle" style="font-size:14px"></i>
-    Add hobby photos to <code>hobbies/</code> folder — named like <code>hiking.jpg</code>, <code>photography.jpg</code>, etc.
+  <div class="section-header">
+    <div class="section-color-tab yellow-tab"></div>
+    <div class="section-eyebrow">Beyond Research — Hobbies &amp; Life</div>
   </div>
+  <div class="hobbies-mosaic" id="hobbiesGrid"></div>
+  <div class="gallery-note"><i class="ti ti-info-circle" style="font-size:14px"></i>Add photos to <code>hobbies/</code> in the repo.</div>
 </div>
 
 <!-- CONTACT -->
 <div class="section" id="contact">
-  <div class="section-eyebrow">Contact</div>
-  <div class="two-col">
-    <div class="col-label">Advisor: Shijia Pan<br>EECS · UC Merced</div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <a class="pill" href="mailto:srohal@ucmerced.edu" style="width:fit-content"><i class="ti ti-mail"></i>srohal@ucmerced.edu</a>
-      <a class="pill" href="https://scholar.google.com/citations?user=8EqXZR8AAAAJ&hl=en" target="_blank" style="width:fit-content"><i class="ti ti-book"></i>Google Scholar</a>
-      <a class="pill" href="https://sites.google.com/view/srohal" target="_blank" style="width:fit-content"><i class="ti ti-world"></i>sites.google.com/view/srohal</a>
-      <a class="pill" href="https://github.com/sr004" target="_blank" style="width:fit-content"><i class="ti ti-brand-github"></i>github.com/sr004</a>
+  <div class="section-header">
+    <div class="section-color-tab red-tab"></div>
+    <div class="section-eyebrow">Get in Touch</div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-left">
+      <div class="contact-heading">Let's<br>Connect</div>
+      <div class="contact-sub">PhD Researcher at UC Merced working on ubiquitous sensing, origami-inspired hardware, and wearable systems. Open to collaborations, talks, and research discussions.</div>
+      <div style="font-size:12px;opacity:.7;font-weight:700">Advisor: Shijia Pan · EECS · UC Merced</div>
+    </div>
+    <div class="contact-right">
+      <a class="contact-pill" href="mailto:srohal@ucmerced.edu"><i class="ti ti-mail"></i>srohal@ucmerced.edu</a>
+      <a class="contact-pill" href="https://scholar.google.com/citations?user=8EqXZR8AAAAJ&hl=en" target="_blank"><i class="ti ti-book"></i>Google Scholar</a>
+      <a class="contact-pill" href="https://sites.google.com/view/srohal" target="_blank"><i class="ti ti-world"></i>Personal Website</a>
+      <a class="contact-pill" href="https://github.com/sr004" target="_blank"><i class="ti ti-brand-github"></i>github.com/sr004</a>
     </div>
   </div>
 </div>
 
+<!-- FOOTER -->
 <div class="footer">
-  <span class="footer-left">Shubham Rohal · PhD Researcher · UC Merced · 2025</span>
-  <div class="footer-right">
+  <div class="footer-block yellow">Shubham Rohal</div>
+  <div class="footer-block red">PhD · UC Merced · 2025</div>
+  <div class="footer-block flex1">
     <a href="https://scholar.google.com/citations?user=8EqXZR8AAAAJ&hl=en" target="_blank">Scholar</a>
     <a href="https://github.com/sr004" target="_blank">GitHub</a>
     <a href="https://sites.google.com/view/srohal" target="_blank">Website</a>
   </div>
 </div>
 
-</div><!-- .content -->
+</div><!-- .page -->
 
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close"><i class="ti ti-x"></i></button>
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
   <img id="lightboxImg" src="" alt="">
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// ─── CONFIG — edit these to add content ─────────────────────────
-// Research images: add files to images/ folder with these names
+// ── Config ──────────────────────────────────────────────────────
 const researchImages = [
-  { file: "origami-sensor.jpg",  caption: "Origami Pressure Sensor" },
-  { file: "finepose-setup.jpg",  caption: "FinePose Lab Setup" },
-  { file: "mooca-demo.jpg",      caption: "MOOCA Demo @ SenSys" },
-  { file: "lab-setup.jpg",       caption: "Lab Setup" },
-  { file: "wearable-gear.jpg",   caption: "Wearable Gear System" },
-  { file: "orifeel-proto.jpg",   caption: "OriFeel Prototype" },
+  { file:"origami-sensor.jpg",  caption:"Origami Pressure Sensor" },
+  { file:"finepose-setup.jpg",  caption:"FinePose Lab Setup" },
+  { file:"mooca-demo.jpg",      caption:"MOOCA Demo @ SenSys" },
+  { file:"lab-setup.jpg",       caption:"Lab Setup" },
+  { file:"wearable-gear.jpg",   caption:"Wearable Gear System" },
+  { file:"orifeel-proto.jpg",   caption:"OriFeel Prototype" },
 ];
-
-// Papers: add PDFs to papers/ folder with these names
 const papers = [
-  { file: "sensys2024.pdf",  title: "Don't Crosstalk to Me",            venue: "SenSys 2024" },
-  { file: "ipsn2022.pdf",    title: "Sedentary Posture Muscle Monitoring", venue: "IPSN 2022" },
-  { file: "bodysys2022.pdf", title: "FinePose",                          venue: "BodySys 2022" },
-  { file: "autoloc2022.pdf", title: "AutoLoc",                           venue: "Frontiers in Big Data 2022" },
-  { file: "enssys2025.pdf",  title: "Battery-Less Air Quality Sensing",  venue: "EnsSys 2025" },
-  { file: "orifeel2025.pdf", title: "OriFeel",                           venue: "CS-ArXiv 2025" },
+  { file:"sensys2024.pdf",  title:"Don't Crosstalk to Me",              venue:"SenSys 2024" },
+  { file:"ipsn2022.pdf",    title:"Sedentary Posture Muscle Monitoring", venue:"IPSN 2022" },
+  { file:"bodysys2022.pdf", title:"FinePose",                            venue:"BodySys 2022" },
+  { file:"autoloc2022.pdf", title:"AutoLoc",                             venue:"Frontiers in Big Data 2022" },
+  { file:"enssys2025.pdf",  title:"Battery-Less Air Quality Sensing",   venue:"EnsSys 2025" },
+  { file:"orifeel2025.pdf", title:"OriFeel",                             venue:"CS-ArXiv 2025" },
 ];
-
-// Hobbies: add photos to hobbies/ folder with these names
 const hobbies = [
-  { file: "hiking.jpg",       name: "Hiking",       desc: "Exploring trails around Yosemite", icon: "ti-mountain", color: "#3ecfcf" },
-  { file: "photography.jpg",  name: "Photography",  desc: "Capturing moments through a lens",  icon: "ti-camera",   color: "#7c6fff" },
-  { file: "cooking.jpg",      name: "Cooking",      desc: "Experimenting with new recipes",     icon: "ti-chef-hat", color: "#ff6fb0" },
-  { file: "travel.jpg",       name: "Travel",       desc: "Exploring new places & cultures",   icon: "ti-plane",    color: "#f4a261" },
-  { file: "reading.jpg",      name: "Reading",      desc: "Sci-fi, tech & philosophy",         icon: "ti-book",     color: "#3ecfcf" },
-  { file: "music.jpg",        name: "Music",        desc: "Guitar & exploring world music",    icon: "ti-music",    color: "#7c6fff" },
+  { file:"hiking.jpg",      name:"Hiking",       desc:"Trails around Yosemite",       icon:"ti-mountain" },
+  { file:"photography.jpg", name:"Photography",  desc:"Capturing moments",             icon:"ti-camera" },
+  { file:"cooking.jpg",     name:"Cooking",      desc:"Experimenting with recipes",    icon:"ti-chef-hat" },
+  { file:"travel.jpg",      name:"Travel",       desc:"Exploring new cultures",        icon:"ti-plane" },
+  { file:"reading.jpg",     name:"Reading",      desc:"Sci-fi, tech & philosophy",    icon:"ti-book" },
+  { file:"music.jpg",       name:"Music",        desc:"Guitar & world music",          icon:"ti-music" },
 ];
-
-// ─── Project data ────────────────────────────────────────────────
 const projects = [
-  {
-    id: "origami-pressure",
-    title: "Origami Structure-Augmented Surface Pressure Sensing",
-    meta: "2022 – Present · SenSys 2024 · 18% acceptance rate",
-    desc: "Miura-Ori origami folds integrated into pressure sensor composites eliminate crosstalk between sensing cells.",
-    icon: "ti-grid-dots",
-    stl: "models/origami-pressure.stl",
-    detail: `<p>Surface pressure sensing matrices power many ubiquitous applications — gait monitoring, posture analysis, autonomous retail. Traditional matrices either cost too much or suffer from signal leakage (crosstalk) between cells.</p>
-    <ul>
-      <li>Elastic 3D space truss inspired by Miura-Ori origami fold physically blocks spurious signal paths</li>
-      <li>Circuit-guided 1D CNN models and filters ghosting signals algorithmically</li>
-      <li>Scalable to large-area deployments without cost blowup</li>
-    </ul>
-    <span class="proj-pub"><i class="ti ti-file-text"></i> SenSys 2024 — 18% acceptance rate</span>`
-  },
-  {
-    id: "orifeel",
-    title: "OriFeel: Origami-Inspired Tactile Feedback Interface",
-    meta: "2025 – Present · CS-ArXiv 2025",
-    desc: "Sub-centimeter tactile feedback embedded in everyday surfaces using origami folds and a single string actuator.",
-    icon: "ti-fold",
-    stl: "models/orifeel.stl",
-    detail: `<p>OriFeel embeds a Miura-Ori inspired 3D-printed elastic structure into flat surfaces — thin enough for a table, shelf, or wall panel — enabling ambient surfaces to convey information through touch.</p>
-    <ul>
-      <li>Structure folds and changes height on demand, registering as tactile sensation</li>
-      <li>Single string actuator controls multiple fold points, minimizing power draw</li>
-      <li>Sub-centimeter thickness makes it embeddable in everyday objects</li>
-    </ul>
-    <span class="proj-pub"><i class="ti ti-file-text"></i> CS-ArXiv 2025</span>`
-  },
-  {
-    id: "wearable-spatial",
-    title: "Spatially Adaptive Wearable Sensing",
-    meta: "2024 – Present · CS-ArXiv 2025",
-    desc: "On-surface gear structures let wearable sensors automatically reposition to compensate for body shape variance.",
-    icon: "ti-settings-2",
-    stl: "models/wearable-spatial.stl",
-    detail: `<p>Wearable systems are highly sensitive to sensor placement — and bodies differ enormously. This project integrates mechanical gear patterns into wearable surfaces so sensors move autonomously.</p>
-    <ul>
-      <li>2D gear patterns drive sensor movement across a defined track via rotation</li>
-      <li>Modified multi-agent path-finding algorithm handles gear-constrained movement</li>
-      <li>No manual recalibration needed when switching between users</li>
-    </ul>
-    <span class="proj-pub"><i class="ti ti-file-text"></i> CS-ArXiv 2025</span>`
-  },
-  {
-    id: "finepose",
-    title: "Fine-Grained Muscle Profiling for Posture Correction",
-    meta: "2021 – Present · IPSN 2022 Best Poster · BodySys 2022",
-    desc: "Repurposes haptic vibration actuators for active muscle sensing to profile stiffness and guide posture correction.",
-    icon: "ti-activity",
-    stl: "models/finepose.stl",
-    detail: `<p>Existing posture solutions track skeletal position — but miss the muscles that cause long-term injury. This project senses muscle state directly using vibration signals from existing haptic hardware.</p>
-    <ul>
-      <li>Active vibration signals travel through muscle; propagation models reveal stiffness</li>
-      <li>Captures Type I supporting muscles that EMG cannot characterize</li>
-      <li>Regression models track stiffness over time for personalized recommendations</li>
-    </ul>
-    <span class="proj-pub"><i class="ti ti-file-text"></i> IPSN 2022 Best Poster · BodySys @ MobiSys 2022</span>`
-  }
+  { id:"origami-pressure", title:"Origami Structure-Augmented Surface Pressure Sensing", meta:"2022–Present · SenSys 2024 · 18% accept", desc:"Miura-Ori origami folds eliminate crosstalk in pressure sensor composites.", icon:"ti-grid-dots", stl:"models/origami-pressure.stl",
+    detail:`<p>Surface pressure matrices power gait monitoring, posture analysis, and autonomous retail. We eliminate crosstalk via physical + algorithmic co-design.</p><ul><li>3D space truss inspired by Miura-Ori fold blocks spurious signal paths</li><li>Circuit-guided 1D CNN filters ghosting signals algorithmically</li><li>Scalable to large areas without cost blowup</li></ul><span class="proj-pub"><i class="ti ti-file-text"></i> SenSys 2024 — 18% accept</span>` },
+  { id:"orifeel", title:"OriFeel: Origami-Inspired Tactile Feedback Interface", meta:"2025–Present · CS-ArXiv 2025", desc:"Sub-centimeter tactile feedback in everyday surfaces via a single string actuator.", icon:"ti-fold", stl:"models/orifeel.stl",
+    detail:`<p>OriFeel embeds a Miura-Ori inspired elastic structure into flat surfaces — thin enough for a table or shelf — enabling ambient surfaces to convey information through touch.</p><ul><li>Structure folds on demand, changing height registerable by touch</li><li>Single actuator controls multiple fold points — minimal power</li><li>Sub-centimeter thickness enables everyday embedding</li></ul><span class="proj-pub"><i class="ti ti-file-text"></i> CS-ArXiv 2025</span>` },
+  { id:"wearable-spatial", title:"Spatially Adaptive Wearable Sensing", meta:"2024–Present · CS-ArXiv 2025", desc:"Gear structures on wearable surfaces auto-reposition sensors to fit any body.", icon:"ti-settings-2", stl:"models/wearable-spatial.stl",
+    detail:`<p>Wearable performance depends heavily on sensor placement, which varies across users. Gear patterns integrated into wearable surfaces enable automatic repositioning.</p><ul><li>2D gear patterns drive sensor movement via rotation</li><li>Modified multi-agent path-finding handles gear constraints</li><li>No manual recalibration between users</li></ul><span class="proj-pub"><i class="ti ti-file-text"></i> CS-ArXiv 2025</span>` },
+  { id:"finepose", title:"Fine-Grained Muscle Profiling for Posture Correction", meta:"2021–Present · IPSN 2022 Best Poster", desc:"Haptic vibration repurposed for active muscle sensing — beyond skeletal posture tracking.", icon:"ti-activity", stl:"models/finepose.stl",
+    detail:`<p>Existing posture solutions only track skeleton. We sense muscle state directly using vibration signals from existing haptic hardware.</p><ul><li>Active vibration reveals muscle stiffness via propagation models</li><li>Captures Type I supporting muscles EMG cannot reach</li><li>Regression models track stiffness over time for personalized guidance</li></ul><span class="proj-pub"><i class="ti ti-file-text"></i> IPSN 2022 Best Poster · BodySys @ MobiSys 2022</span>` },
 ];
 
-// ─── Build research gallery ──────────────────────────────────────
-const researchGalleryEl = document.getElementById('researchGallery');
+// ── Research gallery ─────────────────────────────────────────────
+const rg = document.getElementById('researchGallery');
 researchImages.forEach(img => {
-  const card = document.createElement('div');
-  card.className = 'img-card';
-  card.innerHTML = `
+  const cell = document.createElement('div');
+  cell.className = 'gallery-cell';
+  cell.innerHTML = `
     <img src="images/${img.file}" alt="${img.caption}"
-      onerror="this.parentElement.innerHTML='<div class=\\'img-placeholder\\'><i class=\\'ti ti-photo-off\\'></i><span>${img.caption}</span></div><div class=\\'img-caption\\'>${img.caption}</div>'">
-    <div class="img-caption">${img.caption}</div>`;
-  card.querySelector('img') && card.querySelector('img').addEventListener('click', () => openLightbox(`images/${img.file}`));
-  researchGalleryEl.appendChild(card);
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="gallery-cell-placeholder" style="display:none">
+      <i class="ti ti-photo-off"></i><span>${img.caption}</span>
+    </div>
+    <div class="gallery-caption">${img.caption}</div>`;
+  cell.addEventListener('click', () => {
+    const i = cell.querySelector('img');
+    if (i && i.style.display !== 'none') openLightbox(`images/${img.file}`);
+  });
+  rg.appendChild(cell);
 });
 
-// ─── Build PDF grid ──────────────────────────────────────────────
-const pdfGrid = document.getElementById('pdfGrid');
+// ── PDF grid ─────────────────────────────────────────────────────
+const pg = document.getElementById('pdfGrid');
 papers.forEach(p => {
   const card = document.createElement('a');
   card.className = 'pdf-card';
-  card.href = `papers/${p.file}`;
-  card.target = '_blank';
-  card.innerHTML = `
-    <div class="pdf-icon"><i class="ti ti-file-type-pdf"></i></div>
-    <div class="pdf-info">
-      <div class="pdf-title">${p.title}</div>
-      <div class="pdf-meta">${p.venue}</div>
-    </div>
-    <i class="ti ti-external-link" style="font-size:14px;color:var(--text3);margin-left:auto;flex-shrink:0"></i>`;
-  pdfGrid.appendChild(card);
+  card.href = `papers/${p.file}`; card.target = '_blank';
+  card.innerHTML = `<div class="pdf-icon"><i class="ti ti-file-type-pdf"></i></div><div><div class="pdf-title">${p.title}</div><div class="pdf-meta">${p.venue}</div></div><i class="ti ti-arrow-up-right" style="margin-left:auto;font-size:16px;flex-shrink:0"></i>`;
+  pg.appendChild(card);
 });
 
-// ─── Build hobbies grid ──────────────────────────────────────────
-const hobbiesGrid = document.getElementById('hobbiesGrid');
+// ── Hobbies ───────────────────────────────────────────────────────
+const hg = document.getElementById('hobbiesGrid');
 hobbies.forEach(h => {
   const card = document.createElement('div');
   card.className = 'hobby-card';
   card.innerHTML = `
-    <img src="hobbies/${h.file}" alt="${h.name}"
-      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-      style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block">
+    <img class="hobby-img" src="hobbies/${h.file}" alt="${h.name}"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <div class="hobby-placeholder" style="display:none">
-      <i class="ti ${h.icon}" style="color:${h.color};font-size:32px"></i>
-      <span>${h.name}</span>
+      <i class="ti ${h.icon}"></i><div class="hobby-ph-lbl">${h.name}</div>
     </div>
-    <div class="hobby-caption">
+    <div class="hobby-info">
       <div class="hobby-name">${h.name}</div>
       <div class="hobby-desc">${h.desc}</div>
     </div>`;
   card.addEventListener('click', () => {
-    const img = card.querySelector('img');
-    if (img && img.style.display !== 'none') openLightbox(`hobbies/${h.file}`);
+    const i = card.querySelector('.hobby-img');
+    if (i && i.style.display !== 'none') openLightbox(`hobbies/${h.file}`);
   });
-  hobbiesGrid.appendChild(card);
+  hg.appendChild(card);
 });
 
-// ─── Build project cards ─────────────────────────────────────────
+// ── Project cards ────────────────────────────────────────────────
 const grid = document.getElementById('projectsGrid');
 projects.forEach(p => {
   const card = document.createElement('div');
-  card.className = 'proj-card';
-  card.id = 'card-' + p.id;
+  card.className = 'proj-card'; card.id = 'card-' + p.id;
   card.innerHTML = `
     <div class="proj-header" onclick="toggleCard('${p.id}')">
+      <div class="proj-accent-bar"></div>
       <div class="proj-top">
-        <div class="proj-title"><i class="ti ${p.icon}" style="font-size:14px;margin-right:6px;color:var(--accent1)"></i>${p.title}</div>
+        <div class="proj-title"><i class="ti ${p.icon}" style="margin-right:6px"></i>${p.title}</div>
         <div class="proj-toggle"><i class="ti ti-plus"></i></div>
       </div>
       <div class="proj-meta">${p.meta}</div>
       <div class="proj-desc">${p.desc}</div>
-      <div class="proj-hint"><i class="ti ti-cube" style="font-size:13px"></i>Click to expand 3D model + details</div>
+      <div class="proj-hint"><i class="ti ti-cube" style="font-size:12px"></i>Click to view 3D model</div>
     </div>
     <div class="proj-panel">
       <div class="viewer-area" id="viewer-${p.id}">
         <div class="viewer-placeholder" id="placeholder-${p.id}">
           <i class="ti ti-cube-send"></i>
-          <div class="viewer-placeholder-text">3D model loads from<br><strong style="color:var(--accent2)">${p.stl}</strong></div>
-          <div class="viewer-note">Add the STL file to your repo<br>and it will appear here automatically</div>
+          <div class="viewer-placeholder-text">Add ${p.stl}<br>to the repo to view in 3D</div>
         </div>
         <div class="viewer-controls" id="controls-${p.id}">
-          <button onclick="resetCamera('${p.id}')" title="Reset"><i class="ti ti-focus-centered"></i></button>
-          <button onclick="toggleSpin('${p.id}')" id="spin-btn-${p.id}" title="Spin"><i class="ti ti-player-pause"></i></button>
-          <button onclick="toggleWire('${p.id}')" title="Wireframe"><i class="ti ti-topology-star-3"></i></button>
+          <button onclick="resetCamera('${p.id}')"><i class="ti ti-focus-centered"></i></button>
+          <button onclick="toggleSpin('${p.id}')" id="spin-btn-${p.id}"><i class="ti ti-player-pause"></i></button>
+          <button onclick="toggleWire('${p.id}')"><i class="ti ti-topology-star-3"></i></button>
         </div>
         <canvas id="canvas-${p.id}" class="viewer-canvas"></canvas>
       </div>
@@ -761,8 +837,7 @@ projects.forEach(p => {
       </div>
     </div>`;
   grid.appendChild(card);
-  // Auto-load STL from repo
-  loadSTLFromUrl(p.id, p.stl);
+  fetch(p.stl).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer();}).then(b=>initViewer(p.id,b)).catch(()=>{});
 });
 
 function toggleCard(id) {
@@ -772,143 +847,75 @@ function toggleCard(id) {
   if (!wasOpen) {
     card.classList.add('open');
     if (viewers[id]) setTimeout(() => {
-      const c = document.getElementById('canvas-' + id);
+      const c = document.getElementById('canvas-'+id);
       viewers[id].renderer.setSize(c.offsetWidth, c.offsetHeight);
-      viewers[id].camera.aspect = c.offsetWidth / c.offsetHeight;
+      viewers[id].camera.aspect = c.offsetWidth/c.offsetHeight;
       viewers[id].camera.updateProjectionMatrix();
     }, 60);
   }
 }
 
-// ─── 3D STL Viewer ───────────────────────────────────────────────
+// ── 3D STL viewer ────────────────────────────────────────────────
 const viewers = {};
-
 function parseSTL(buf) {
-  const positions = [], normals = [];
-  const txt = new TextDecoder().decode(new Uint8Array(buf, 0, 5));
-  const isBinary = txt !== 'solid';
+  const pos=[], nor=[];
+  const isBinary = new TextDecoder().decode(new Uint8Array(buf,0,5)) !== 'solid';
   if (!isBinary) {
-    const text = new TextDecoder().decode(buf);
-    const re = /facet normal\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+outer loop\s+vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)/g;
-    let m;
-    while ((m = re.exec(text)) !== null) {
-      const nx=+m[1],ny=+m[2],nz=+m[3];
-      for(let i=0;i<3;i++) normals.push(nx,ny,nz);
-      positions.push(+m[4],+m[5],+m[6],+m[7],+m[8],+m[9],+m[10],+m[11],+m[12]);
-    }
+    const re=/facet normal\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+outer loop\s+vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+vertex\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)\s+([\d.eE+\-]+)/g;
+    let m; while((m=re.exec(new TextDecoder().decode(buf)))!==null){const nx=+m[1],ny=+m[2],nz=+m[3];for(let i=0;i<3;i++)nor.push(nx,ny,nz);pos.push(+m[4],+m[5],+m[6],+m[7],+m[8],+m[9],+m[10],+m[11],+m[12]);}
   } else {
-    const v = new DataView(buf);
-    const n = v.getUint32(80,true);
-    let o = 84;
-    for(let i=0;i<n;i++){
-      const nx=v.getFloat32(o,true),ny=v.getFloat32(o+4,true),nz=v.getFloat32(o+8,true); o+=12;
-      for(let j=0;j<3;j++){positions.push(v.getFloat32(o,true),v.getFloat32(o+4,true),v.getFloat32(o+8,true));normals.push(nx,ny,nz);o+=12;}
-      o+=2;
-    }
+    const v=new DataView(buf),n=v.getUint32(80,true);let o=84;
+    for(let i=0;i<n;i++){const nx=v.getFloat32(o,true),ny=v.getFloat32(o+4,true),nz=v.getFloat32(o+8,true);o+=12;for(let j=0;j<3;j++){pos.push(v.getFloat32(o,true),v.getFloat32(o+4,true),v.getFloat32(o+8,true));nor.push(nx,ny,nz);o+=12;}o+=2;}
   }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions),3));
-  geo.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(normals),3));
-  geo.computeBoundingBox();
-  return geo;
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(pos),3));
+  g.setAttribute('normal',new THREE.BufferAttribute(new Float32Array(nor),3));
+  g.computeBoundingBox(); return g;
 }
-
-function loadSTLFromUrl(id, url) {
-  fetch(url).then(r => { if(!r.ok) throw new Error('not found'); return r.arrayBuffer(); })
-    .then(buf => initViewer(id, buf))
-    .catch(() => {}); // silently skip if file not in repo yet
-}
-
 function initViewer(id, buf) {
-  const container = document.getElementById('viewer-' + id);
-  const canvas = document.getElementById('canvas-' + id);
-  const placeholder = document.getElementById('placeholder-' + id);
-  const controls = document.getElementById('controls-' + id);
-  placeholder.style.display = 'none';
-  canvas.style.display = 'block';
-  controls.style.display = 'flex';
-
-  const W = container.clientWidth, H = container.clientHeight || 260;
-  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
-  renderer.setSize(W, H);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  renderer.setClearColor(0x000000,0);
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, W/H, 0.01, 100000);
-  scene.add(new THREE.AmbientLight(0xffffff,0.45));
-  const dl = new THREE.DirectionalLight(0xffffff,0.9); dl.position.set(1,2,3); scene.add(dl);
-  const dl2 = new THREE.DirectionalLight(0x7c6fff,0.35); dl2.position.set(-2,-1,-1); scene.add(dl2);
-
-  const geo = parseSTL(buf); geo.center();
-  const mat = new THREE.MeshPhongMaterial({color:0x8888cc,specular:0x444488,shininess:50,side:THREE.DoubleSide});
-  const wireMat = new THREE.MeshBasicMaterial({color:0x7c6fff,wireframe:true});
-  const mesh = new THREE.Mesh(geo, mat);
-  scene.add(mesh);
-
-  const box = new THREE.Box3().setFromObject(mesh);
-  const sz = box.getSize(new THREE.Vector3());
-  const maxDim = Math.max(sz.x, sz.y, sz.z);
-  camera.position.set(0,0,maxDim*2.2);
-  camera.lookAt(0,0,0);
-
-  let spinning=true, useWire=false, rotX=0, rotY=0, isDragging=false, prevMouse={x:0,y:0};
-
-  canvas.addEventListener('mousedown', e=>{isDragging=true;prevMouse={x:e.clientX,y:e.clientY};spinning=false;});
-  window.addEventListener('mouseup', ()=>{isDragging=false;});
-  canvas.addEventListener('mousemove', e=>{
-    if(!isDragging) return;
-    rotY+=(e.clientX-prevMouse.x)*0.008; rotX+=(e.clientY-prevMouse.y)*0.008;
-    prevMouse={x:e.clientX,y:e.clientY};
-  });
-  canvas.addEventListener('wheel', e=>{
-    camera.position.z=Math.max(maxDim*0.4,Math.min(maxDim*7,camera.position.z+e.deltaY*0.05));
-    e.preventDefault();
-  },{passive:false});
+  const container=document.getElementById('viewer-'+id), canvas=document.getElementById('canvas-'+id);
+  const placeholder=document.getElementById('placeholder-'+id), controls=document.getElementById('controls-'+id);
+  placeholder.style.display='none'; canvas.style.display='block'; controls.style.display='flex';
+  const W=container.clientWidth, H=container.clientHeight||260;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setSize(W,H); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setClearColor(0,0);
+  const scene=new THREE.Scene(), camera=new THREE.PerspectiveCamera(45,W/H,.01,100000);
+  scene.add(new THREE.AmbientLight(0xffffff,.5));
+  const dl=new THREE.DirectionalLight(0xffffff,.9); dl.position.set(1,2,3); scene.add(dl);
+  const dl2=new THREE.DirectionalLight(0x1B4FD8,.3); dl2.position.set(-2,-1,-1); scene.add(dl2);
+  const geo=parseSTL(buf); geo.center();
+  const mat=new THREE.MeshPhongMaterial({color:0x1B4FD8,specular:0x333333,shininess:40,side:THREE.DoubleSide});
+  const wireMat=new THREE.MeshBasicMaterial({color:0xD62828,wireframe:true});
+  const mesh=new THREE.Mesh(geo,mat); scene.add(mesh);
+  const box=new THREE.Box3().setFromObject(mesh), sz=box.getSize(new THREE.Vector3());
+  const maxDim=Math.max(sz.x,sz.y,sz.z);
+  camera.position.set(0,0,maxDim*2.2); camera.lookAt(0,0,0);
+  let spinning=true,useWire=false,rotX=0,rotY=0,isDragging=false,prev={x:0,y:0};
+  canvas.addEventListener('mousedown',e=>{isDragging=true;prev={x:e.clientX,y:e.clientY};spinning=false;});
+  window.addEventListener('mouseup',()=>{isDragging=false;});
+  canvas.addEventListener('mousemove',e=>{if(!isDragging)return;rotY+=(e.clientX-prev.x)*.008;rotX+=(e.clientY-prev.y)*.008;prev={x:e.clientX,y:e.clientY};});
+  canvas.addEventListener('wheel',e=>{camera.position.z=Math.max(maxDim*.4,Math.min(maxDim*7,camera.position.z+e.deltaY*.05));e.preventDefault();},{passive:false});
   let lt=null;
   canvas.addEventListener('touchstart',e=>{lt=e.touches[0];spinning=false;});
-  canvas.addEventListener('touchmove',e=>{
-    if(!lt) return;
-    const t=e.touches[0];
-    rotY+=(t.clientX-lt.clientX)*0.012; rotX+=(t.clientY-lt.clientY)*0.012;
-    lt=t; e.preventDefault();
-  },{passive:false});
+  canvas.addEventListener('touchmove',e=>{if(!lt)return;const t=e.touches[0];rotY+=(t.clientX-lt.clientX)*.012;rotX+=(t.clientY-lt.clientY)*.012;lt=t;e.preventDefault();},{passive:false});
   canvas.addEventListener('touchend',()=>{lt=null;});
-
-  viewers[id] = {
-    renderer, camera, mesh, mat, wireMat, maxDim,
-    get spinning(){return spinning;}, set spinning(v){spinning=v;},
-    get useWire(){return useWire;}, set useWire(v){useWire=v;},
-    get rotX(){return rotX;}, set rotX(v){rotX=v;},
-    get rotY(){return rotY;}, set rotY(v){rotY=v;},
+  viewers[id]={renderer,camera,mesh,mat,wireMat,maxDim,
+    get spinning(){return spinning;},set spinning(v){spinning=v;},
+    get useWire(){return useWire;},set useWire(v){useWire=v;},
+    get rotX(){return rotX;},set rotX(v){rotX=v;},
+    get rotY(){return rotY;},set rotY(v){rotY=v;},
     reset(){rotX=0;rotY=0;camera.position.set(0,0,maxDim*2.2);spinning=true;}
   };
-
-  (function animate(){
-    requestAnimationFrame(animate);
-    if(spinning) rotY+=0.008;
-    mesh.rotation.x=rotX; mesh.rotation.y=rotY;
-    renderer.render(scene, camera);
-  })();
+  (function animate(){requestAnimationFrame(animate);if(spinning)rotY+=.008;mesh.rotation.x=rotX;mesh.rotation.y=rotY;renderer.render(scene,camera);})();
 }
-
 function resetCamera(id){if(viewers[id])viewers[id].reset();}
-function toggleSpin(id){
-  if(!viewers[id])return;
-  viewers[id].spinning=!viewers[id].spinning;
-  document.getElementById('spin-btn-'+id).innerHTML=viewers[id].spinning
-    ?'<i class="ti ti-player-pause"></i>':'<i class="ti ti-player-play"></i>';
-}
-function toggleWire(id){
-  if(!viewers[id])return;
-  const v=viewers[id]; v.useWire=!v.useWire;
-  v.mesh.material=v.useWire?v.wireMat:v.mat;
-}
+function toggleSpin(id){if(!viewers[id])return;viewers[id].spinning=!viewers[id].spinning;document.getElementById('spin-btn-'+id).innerHTML=viewers[id].spinning?'<i class="ti ti-player-pause"></i>':'<i class="ti ti-player-play"></i>';}
+function toggleWire(id){if(!viewers[id])return;const v=viewers[id];v.useWire=!v.useWire;v.mesh.material=v.useWire?v.wireMat:v.mat;}
 
-// ─── Lightbox ────────────────────────────────────────────────────
+// ── Lightbox ─────────────────────────────────────────────────────
 function openLightbox(src){document.getElementById('lightboxImg').src=src;document.getElementById('lightbox').classList.add('open');}
 function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
-document.getElementById('lightbox').addEventListener('click', closeLightbox);
+document.getElementById('lightbox').addEventListener('click',closeLightbox);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
 </script>
 </body>
